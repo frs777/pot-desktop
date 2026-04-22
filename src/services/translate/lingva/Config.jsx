@@ -1,26 +1,88 @@
+import { INSTANCE_NAME_CONFIG_KEY } from '../../../utils/service_instance';
+import { Button, Input } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@nextui-org/react';
-import React from 'react';
+import React, { useState } from 'react';
+
+import { useConfig } from '../../../hooks/useConfig';
+import { useToastStyle } from '../../../hooks';
+import { translate } from './index';
 
 export function Config(props) {
-    const { updateServiceList, onClose } = props;
+    const [isLoading, setIsLoading] = useState(false);
+    const { instanceKey, updateServiceList, onClose } = props;
     const { t } = useTranslation();
+    const [lingvaConfig, setLingvaConfig] = useConfig(
+        instanceKey,
+        {
+            [INSTANCE_NAME_CONFIG_KEY]: t('services.translate.lingva.title'),
+            requestPath: 'lingva.pot-app.com',
+        },
+        { sync: false }
+    );
+
+    const toastStyle = useToastStyle();
 
     return (
-        <>
-            <div>{t('services.no_need')}</div>
-            <div>
-                <Button
-                    fullWidth
-                    color='primary'
-                    onPress={() => {
-                        updateServiceList('lingva');
-                        onClose();
-                    }}
-                >
-                    {t('common.save')}
-                </Button>
-            </div>
-        </>
+        lingvaConfig !== null && (
+            <>
+                <div className='config-item'>
+                    <Input
+                        label={t('services.instance_name')}
+                        labelPlacement='outside-left'
+                        value={lingvaConfig[INSTANCE_NAME_CONFIG_KEY]}
+                        variant='bordered'
+                        classNames={{
+                            base: 'justify-between',
+                            label: 'text-[length:--nextui-font-size-medium]',
+                            mainWrapper: 'max-w-[50%]',
+                        }}
+                        onValueChange={(value) => {
+                            setLingvaConfig({
+                                ...lingvaConfig,
+                                [INSTANCE_NAME_CONFIG_KEY]: value,
+                            });
+                        }}
+                    />
+                </div>
+                <div className={'config-item'}>
+                    <h3 className='my-auto'>{t('services.translate.lingva.request_path')}</h3>
+                    <Input
+                        value={lingvaConfig['requestPath']}
+                        variant='bordered'
+                        className='max-w-[50%]'
+                        onValueChange={(value) => {
+                            setLingvaConfig({
+                                ...lingvaConfig,
+                                requestPath: value,
+                            });
+                        }}
+                    />
+                </div>
+                <div>
+                    <Button
+                        isLoading={isLoading}
+                        fullWidth
+                        color='primary'
+                        onPress={() => {
+                            setIsLoading(true);
+                            translate('hello', Language.en, Language.pl, { config: lingvaConfig }).then(
+                                () => {
+                                    setIsLoading(false);
+                                    setLingvaConfig(lingvaConfig, true);
+                                    updateServiceList(instanceKey);
+                                    onClose();
+                                },
+                                (e) => {
+                                    setIsLoading(false);
+                                    toast.error(t('config.service.test_failed') + e.toString(), { style: toastStyle });
+                                }
+                            );
+                        }}
+                    >
+                        {t('common.save')}
+                    </Button>
+                </div>
+            </>
+        )
     );
 }

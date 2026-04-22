@@ -1,11 +1,11 @@
-import { appWindow } from '@tauri-apps/api/window';
+import { getCurrentWindow } from '@tauri-apps/api/window';
 import { BrowserRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { warn } from 'tauri-plugin-log-api';
+import { warn } from '@tauri-apps/plugin-log';
 import React, { useEffect } from 'react';
 import { useTheme } from 'next-themes';
 
-import { invoke } from '@tauri-apps/api/tauri';
+import { invoke } from '@tauri-apps/api/core';
 import Screenshot from './window/Screenshot';
 import Translate from './window/Translate';
 import Recognize from './window/Recognize';
@@ -17,6 +17,7 @@ import './style.css';
 import './i18n';
 
 const windowMap = {
+    main: <Translate />,
     translate: <Translate />,
     screenshot: <Screenshot />,
     recognize: <Recognize />,
@@ -24,10 +25,12 @@ const windowMap = {
     updater: <Updater />,
 };
 
+const currentWindow = getCurrentWindow();
+
 export default function App() {
     const [devMode] = useConfig('dev_mode', false);
     const [appTheme] = useConfig('app_theme', 'system');
-    const [appLanguage] = useConfig('app_language', 'en');
+    const [appLanguage] = useConfig('app_language', 'pl');
     const [appFont] = useConfig('app_font', 'default');
     const [appFallbackFont] = useConfig('app_fallback_font', 'default');
     const [appFontSize] = useConfig('app_font_size', 16);
@@ -35,7 +38,7 @@ export default function App() {
     const { i18n } = useTranslation();
 
     useEffect(() => {
-        store.load();
+        // Store auto-reloads via file watcher
     }, []);
 
     useEffect(() => {
@@ -52,7 +55,7 @@ export default function App() {
                     e.preventDefault();
                 }
                 if (e.key === 'Escape') {
-                    await appWindow.close();
+                    await currentWindow.close();
                 }
             });
         } else {
@@ -65,7 +68,7 @@ export default function App() {
                     e.preventDefault();
                 }
                 if (e.key === 'Escape') {
-                    await appWindow.close();
+                    await currentWindow.close();
                 }
             });
         }
@@ -97,7 +100,9 @@ export default function App() {
     }, [appTheme]);
 
     useEffect(() => {
-        if (appLanguage !== null) {
+        console.log('appLanguage changed:', appLanguage);
+        if (appLanguage !== null && appLanguage !== undefined) {
+            console.log('Changing i18n language to:', appLanguage);
             i18n.changeLanguage(appLanguage);
         }
     }, [appLanguage]);
@@ -113,5 +118,5 @@ export default function App() {
         }
     }, [appFont, appFallbackFont, appFontSize]);
 
-    return <BrowserRouter>{windowMap[appWindow.label]}</BrowserRouter>;
+    return <BrowserRouter>{windowMap[currentWindow.label]}</BrowserRouter>;
 }

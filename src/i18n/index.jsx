@@ -19,6 +19,7 @@ import fa_IR from './locales/fa_IR.json';
 import uk_UA from './locales/uk_UA.json';
 import ar_AE from './locales/ar_AE.json';
 import he_IL from './locales/he_IL.json';
+import pl_PL from './locales/pl_PL.json';
 
 // http://www.lingoes.net/zh/translator/langcode.htm
 
@@ -56,6 +57,7 @@ i18n.use(initReactI18next).init({
         uk: uk_UA,
         ar: ar_AE,
         he: he_IL,
+        pl: pl_PL,
     },
 });
 

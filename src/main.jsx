@@ -1,5 +1,4 @@
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
-import { appWindow } from '@tauri-apps/api/window';
 import { NextUIProvider } from '@nextui-org/react';
 import ReactDOM from 'react-dom/client';
 import React from 'react';
@@ -14,9 +13,22 @@ if (import.meta.env.PROD) {
     });
 }
 
-initStore().then(async () => {
-    await initEnv();
+async function start() {
+    try {
+        await initStore();
+    } catch (e) {
+        console.error('initStore failed:', e);
+    }
+    try {
+        await initEnv();
+    } catch (e) {
+        console.error('initEnv failed:', e);
+    }
     const rootElement = document.getElementById('root');
+    if (!rootElement) {
+        console.error('Root element not found!');
+        return;
+    }
     const root = ReactDOM.createRoot(rootElement);
     root.render(
         <NextUIProvider>
@@ -25,4 +37,6 @@ initStore().then(async () => {
             </NextThemesProvider>
         </NextUIProvider>
     );
-});
+}
+
+start();

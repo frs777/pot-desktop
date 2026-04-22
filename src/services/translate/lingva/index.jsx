@@ -1,9 +1,42 @@
-import { fetch, Body } from '@tauri-apps/api/http';
+import { fetch } from '../../../utils/tauri-http.js';
 
-export async function translate(text, from, to) {
+export const Language = {
+    en: 'en',
+    zh: 'zh',
+    ja: 'ja',
+    ko: 'ko',
+    fr: 'fr',
+    de: 'de',
+    es: 'es',
+    ru: 'ru',
+    pl: 'pl',
+    it: 'it',
+    pt: 'pt',
+    ar: 'ar',
+    tr: 'tr',
+    nl: 'nl',
+    id: 'id',
+    th: 'th',
+    vi: 'vi',
+    auto: 'auto',
+};
+
+export async function translate(text, from, to, options = {}) {
+    const { config } = options;
+
+    let { requestPath = 'lingva.pot-app.com' } = config || {};
+
+    if (requestPath.length === 0) {
+        requestPath = 'lingva.pot-app.com';
+    }
+
+    if (!requestPath.startsWith('http')) {
+        requestPath = 'https://' + requestPath;
+    }
+
     let plain_text = text.replaceAll('/', '@@');
     let encode_text = encodeURIComponent(plain_text);
-    const res = await fetch(`https://lingva.pot-app.com/api/v1/${from}/${to}/${encode_text}`, {
+    const res = await fetch(`${requestPath}/api/v1/${from}/${to}/${encode_text}`, {
         method: 'GET',
     });
 

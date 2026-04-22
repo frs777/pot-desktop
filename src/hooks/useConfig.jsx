@@ -10,9 +10,9 @@ export const useConfig = (key, defaultValue, options = {}) => {
 
     // 同步到Store (State -> Store)
     const syncToStore = useCallback(
-        debounce((v) => {
-            store.set(key, v);
-            store.save();
+        debounce(async (v) => {
+            await store.set(key, v);
+            await store.save();
             let eventKey = key.replaceAll('.', '_').replaceAll('@', ':');
             emit(`${eventKey}_changed`, v);
         }),
@@ -20,19 +20,19 @@ export const useConfig = (key, defaultValue, options = {}) => {
     );
 
     // 同步到State (Store -> State)
-    const syncToState = useCallback((v) => {
+    const syncToState = useCallback(async (v) => {
         if (v !== null) {
             setPropertyState(v);
         } else {
-            store.get(key).then((v) => {
-                if (v === null) {
-                    setPropertyState(defaultValue);
-                    store.set(key, defaultValue);
-                    store.save();
-                } else {
-                    setPropertyState(v);
-                }
-            });
+            const val = await store.get(key);
+            console.log(`useConfig('${key}'): store.get returned`, val !== null ? 'value (length: ' + JSON.stringify(val)?.length + ')' : 'null', ', default:', defaultValue);
+            if (val === null) {
+                setPropertyState(defaultValue);
+                await store.set(key, defaultValue);
+                await store.save();
+            } else {
+                setPropertyState(val);
+            }
         }
     }, []);
 
@@ -59,9 +59,9 @@ export const useConfig = (key, defaultValue, options = {}) => {
     return [property, setProperty, getProperty];
 };
 
-export const deleteKey = (key) => {
-    if (store.has(key)) {
-        store.delete(key);
-        store.save();
+export const deleteKey = async (key) => {
+    if (await store.has(key)) {
+        await store.delete(key);
+        await store.save();
     }
 };

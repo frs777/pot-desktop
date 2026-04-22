@@ -12,10 +12,10 @@ import {
     Tooltip,
 } from '@nextui-org/react';
 import { BiCollapseVertical, BiExpandVertical } from 'react-icons/bi';
-import { BaseDirectory, readTextFile } from '@tauri-apps/api/fs';
-import { sendNotification } from '@tauri-apps/api/notification';
+import { BaseDirectory, readTextFile } from '@tauri-apps/plugin-fs';
+import { sendNotification } from '@tauri-apps/plugin-notification';
 import React, { useEffect, useState, useRef } from 'react';
-import { writeText } from '@tauri-apps/api/clipboard';
+import { writeText } from '@tauri-apps/plugin-clipboard-manager';
 import PulseLoader from 'react-spinners/PulseLoader';
 import { TbTransformFilled } from 'react-icons/tb';
 import { HiOutlineVolumeUp } from 'react-icons/hi';
@@ -23,7 +23,7 @@ import { semanticColors } from '@nextui-org/theme';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdContentCopy } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
-import Database from 'tauri-plugin-sql-api';
+import Database from '@tauri-apps/plugin-sql';
 import { GiCycle } from 'react-icons/gi';
 import { useTheme } from 'next-themes';
 import { useAtomValue } from 'jotai';
@@ -39,7 +39,7 @@ import { invoke_plugin } from '../../../../utils/invoke_plugin';
 import * as builtinServices from '../../../../services/translate';
 import * as builtinTtsServices from '../../../../services/tts';
 
-import { info, error as logError } from 'tauri-plugin-log-api';
+import { info, error as logError } from '@tauri-apps/plugin-log';
 import {
     INSTANCE_NAME_CONFIG_KEY,
     ServiceSourceType,
@@ -94,6 +94,14 @@ export default function TargetArea(props) {
 
     // listen to translation
     useEffect(() => {
+        console.log('>>> translate useEffect triggered', {
+            sourceText: sourceText?.substring(0, 30),
+            sourceLanguage,
+            targetLanguage,
+            autoCopy,
+            hideWindow,
+            clipboardMonitor,
+        });
         setResult('');
         setError('');
         if (
@@ -104,6 +112,7 @@ export default function TargetArea(props) {
             hideWindow !== null &&
             clipboardMonitor !== null
         ) {
+            console.log('>>> conditions met, calling translate()');
             if (autoCopy === 'source' && !clipboardMonitor) {
                 writeText(sourceText).then(() => {
                     if (hideWindow) {
@@ -161,10 +170,12 @@ export default function TargetArea(props) {
     }
 
     const translate = async () => {
+        console.log('>>> translate() called, sourceText:', sourceText?.substring(0, 50), 'sourceLanguage:', sourceLanguage, 'targetLanguage:', targetLanguage);
         let id = nanoid();
         translateID[index] = id;
 
         const translateServiceName = getServiceName(currentTranslateServiceInstanceKey);
+        console.log('>>> translateServiceName:', translateServiceName, 'currentTranslateServiceInstanceKey:', currentTranslateServiceInstanceKey);
 
         if (whetherPluginService(currentTranslateServiceInstanceKey)) {
             const pluginInfo = pluginList['translate'][translateServiceName];
@@ -330,7 +341,7 @@ export default function TargetArea(props) {
     useEffect(() => {
         if (ttsServiceList && getServiceSouceType(ttsServiceList[0]) === ServiceSourceType.PLUGIN) {
             readTextFile(`plugins/tts/${getServiceName(ttsServiceList[0])}/info.json`, {
-                dir: BaseDirectory.AppConfig,
+                baseDir: BaseDirectory.AppConfig,
             }).then((infoStr) => {
                 setTtsPluginInfo(JSON.parse(infoStr));
             });

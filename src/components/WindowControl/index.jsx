@@ -1,18 +1,20 @@
 import { VscChromeClose, VscChromeMinimize, VscChromeMaximize, VscChromeRestore } from 'react-icons/vsc';
 import React, { useEffect, useState } from 'react';
-import { appWindow } from '@tauri-apps/api/window';
+import { getCurrentWindow } from '@tauri-apps/api/window';
 import { listen } from '@tauri-apps/api/event';
 import { Button } from '@nextui-org/react';
 
 import { osType } from '../../utils/env';
 import './style.css';
 
+const currentWindow = getCurrentWindow();
+
 export default function WindowControl() {
     const [isMax, setIsMax] = useState(false);
 
     useEffect(() => {
         listen('tauri://resize', async () => {
-            if (await appWindow.isMaximized()) {
+            if (await currentWindow.isMaximized()) {
                 setIsMax(true);
             } else {
                 setIsMax(false);
@@ -26,7 +28,7 @@ export default function WindowControl() {
                 isIconOnly
                 variant='light'
                 className='w-[35px] h-[35px] rounded-none'
-                onPress={() => appWindow.minimize()}
+                onPress={() => currentWindow.minimize()}
             >
                 <VscChromeMinimize className='text-[16px]' />
             </Button>
@@ -36,9 +38,9 @@ export default function WindowControl() {
                 className='w-[35px] h-[35px] rounded-none'
                 onPress={() => {
                     if (isMax) {
-                        appWindow.unmaximize();
+                        currentWindow.unmaximize();
                     } else {
-                        appWindow.maximize();
+                        currentWindow.maximize();
                     }
                 }}
             >
@@ -48,7 +50,7 @@ export default function WindowControl() {
                 isIconOnly
                 variant='light'
                 className={`w-[35px] h-[35px] rounded-none close-button ${osType === 'Linux' && 'rounded-tr-[10px]'}`}
-                onPress={() => appWindow.close()}
+                onPress={() => currentWindow.close()}
             >
                 <VscChromeClose className='text-[16px]' />
             </Button>

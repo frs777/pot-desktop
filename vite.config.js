@@ -5,6 +5,11 @@ import { resolve } from 'path';
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
     plugins: [react()],
+    resolve: {
+        alias: {
+            '@utils': resolve(__dirname, 'src/utils'),
+        },
+    },
 
     // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
     // prevent vite from obscuring rust errors
@@ -13,6 +18,10 @@ export default defineConfig(async () => ({
     server: {
         port: 1420,
         strictPort: true,
+        host: '127.0.0.1',
+        watch: {
+            ignored: ['**/src-tauri/target/**', '**/target/**'],
+        },
     },
     // to make use of `TAURI_DEBUG` and other env variables
     // https://tauri.studio/v1/api/config#buildconfig.beforedevcommand

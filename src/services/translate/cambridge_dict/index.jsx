@@ -1,4 +1,4 @@
-import { fetch } from '@tauri-apps/api/http';
+import { fetch } from '../../../utils/tauri-http.js';
 import { Language } from './info';
 
 class Pronunciation {

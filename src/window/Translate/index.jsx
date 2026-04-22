@@ -1,8 +1,9 @@
-import { readDir, BaseDirectory, readTextFile, exists } from '@tauri-apps/api/fs';
+import { appWindow, currentMonitor } from '@utils/tauri-compat.js';
+import { readDir, BaseDirectory, readTextFile, exists } from '@tauri-apps/plugin-fs';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { appWindow, currentMonitor } from '@tauri-apps/api/window';
+
 import { appConfigDir, join } from '@tauri-apps/api/path';
-import { convertFileSrc } from '@tauri-apps/api/tauri';
+import { convertFileSrc } from '@tauri-apps/api/core';
 import { Spacer, Button } from '@nextui-org/react';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import React, { useState, useEffect } from 'react';
@@ -15,7 +16,7 @@ import TargetArea from './components/TargetArea';
 import { osType } from '../../utils/env';
 import { useConfig } from '../../hooks';
 import { store } from '../../utils/store';
-import { info } from 'tauri-plugin-log-api';
+import { info } from '@tauri-apps/plugin-log';
 
 let blurTimeout = null;
 let resizeTimeout = null;
@@ -163,15 +164,19 @@ export default function Translate() {
     }, [rememberWindowSize]);
 
     const loadPluginList = async () => {
+        console.log('>>> loadPluginList called');
         const serviceTypeList = ['translate', 'tts', 'recognize', 'collection'];
         let temp = {};
         for (const serviceType of serviceTypeList) {
             temp[serviceType] = {};
-            if (await exists(`plugins/${serviceType}`, { dir: BaseDirectory.AppConfig })) {
-                const plugins = await readDir(`plugins/${serviceType}`, { dir: BaseDirectory.AppConfig });
+            const existsResult = await exists(`plugins/${serviceType}`, { baseDir: BaseDirectory.AppConfig });
+            console.log(`>>> exists plugins/${serviceType}:`, existsResult);
+            if (existsResult) {
+                const plugins = await readDir(`plugins/${serviceType}`, { baseDir: BaseDirectory.AppConfig });
+                console.log(`>>> readDir plugins/${serviceType}:`, plugins.length, 'plugins');
                 for (const plugin of plugins) {
                     const infoStr = await readTextFile(`plugins/${serviceType}/${plugin.name}/info.json`, {
-                        dir: BaseDirectory.AppConfig,
+                        baseDir: BaseDirectory.AppConfig,
                     });
                     let pluginInfo = JSON.parse(infoStr);
                     if ('icon' in pluginInfo) {
@@ -186,6 +191,7 @@ export default function Translate() {
                 }
             }
         }
+        console.log('>>> setPluginList:', Object.keys(temp).join(', '), Object.values(temp).map(v => Object.keys(v).length));
         setPluginList({ ...temp });
     };
 
@@ -194,6 +200,33 @@ export default function Translate() {
         if (!unlisten) {
             unlisten = listen('reload_plugin_list', loadPluginList);
         }
+    }, []);
+
+    // Listen for tray events
+    useEffect(() => {
+        const unlistenSettings = listen('open-settings', async () => {
+            info('Open settings requested from tray');
+            const { getCurrentWindow } = await import('@tauri-apps/api/window');
+            const { invoke } = await import('@tauri-apps/api/core');
+            const currentWindow = getCurrentWindow();
+            // Navigate to config page by emitting event
+            await currentWindow.emit('navigate-settings', {});
+        });
+
+        const unlistenClipboardToggle = listen('toggle-clipboard-monitor', async () => {
+            info('Toggle clipboard monitor requested from tray');
+            const { invoke } = await import('@tauri-apps/api/core');
+            try {
+                await invoke('toggle_clipboard_monitor');
+            } catch (e) {
+                error(`Failed to toggle clipboard monitor: ${e}`);
+            }
+        });
+
+        return () => {
+            unlistenSettings.then(f => f && f());
+            unlistenClipboardToggle.then(f => f && f());
+        };
     }, []);
 
     const loadServiceInstanceConfigMap = async () => {
