@@ -211,7 +211,8 @@
                 "qq_channel": "Kanał QQ",
                 "qq_group": "Grupa QQ",
                 "telegram": "Telegram",
-                "discussion": "Dyskusja GitHub"
+                "discussion": "Dyskusja GitHub",
+                "fork_info": "Fork projektu pot-app/pot-desktop"
             }
         },
         "updater": {

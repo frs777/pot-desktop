@@ -41,6 +41,15 @@ pub static APP: OnceCell<tauri::AppHandle> = OnceCell::new();
 pub struct StringWrapper(pub Mutex<String>);
 
 fn main() {
+    // Fix black screen issue on Linux with WebKit2GTK
+    #[cfg(target_os = "linux")]
+    {
+        std::env::set_var("WEBKIT_DISABLE_COMPOSITING_MODE", "1");
+        std::env::set_var("WEBKIT_FORCE_2D_MODE", "1");
+        // Use software rendering if hardware acceleration fails
+        std::env::set_var("LIBGL_ALWAYS_SOFTWARE", "1");
+    }
+
     tauri::Builder::default()
         .plugin(tauri_plugin_single_instance::init(|app, _, cwd| {
             let _ = app

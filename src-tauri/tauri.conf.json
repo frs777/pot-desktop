@@ -5,12 +5,12 @@
         "frontendDist": "../dist",
         "devUrl": "http://127.0.0.1:1420"
     },
-    "productName": "pot",
-    "version": "3.0.7",
-    "identifier": "com.pot-app.desktop",
+    "productName": "Pot-F",
+    "version": "0.1.0",
+    "identifier": "com.pot-f-desktop.desktop",
     "plugins": {
         "updater": {
-            "active": true,
+            "active": false,
             "dialog": false,
             "endpoints": [
                 "https://dl.pot-app.com/https://github.com/pot-app/pot-desktop/releases/download/updater/update.json",
@@ -24,8 +24,8 @@
         "category": "Utility",
         "copyright": "GPLv3",
         "targets": "all",
-        "longDescription": "A cross-platform text translation and ocr software",
-        "shortDescription": "Pot App",
+        "longDescription": "Pot-F Desktop - Polski fork aplikacji do tłumaczenia tekstu i OCR, bazujący na pot-app/pot-desktop",
+        "shortDescription": "Pot-F Desktop",
         "externalBin": [],
         "resources": [],
         "icon": [
@@ -49,7 +49,7 @@
                     "libxdo",
                     "libxcb",
                     "libXrandr",
-                    "tesseract-ocr"
+                    "tesseract"
                 ]
             }
         },
@@ -67,15 +67,6 @@
             "csp": "default-src * data: ; img-src * 'self' asset: https: data: ; style-src * 'unsafe-inline'; worker-src 'self' blob: ; script-src * 'unsafe-eval' 'unsafe-inline'; connect-src * 'self' http: https: ws: wss: asset:;"
         },
         "windows": [
-            {
-                "title": "Pot App",
-                "label": "main",
-                "url": "index.html",
-                "width": 800,
-                "height": 600,
-                "resizable": true,
-                "fullscreen": false
-            },
             {
                 "title": "Daemon",
                 "label": "daemon",

@@ -1,6 +1,6 @@
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from '@nextui-org/react';
 import { remove, BaseDirectory } from '@tauri-apps/plugin-fs';
-import { open as openInBrowser } from '@tauri-apps/plugin-shell';
+import { open as openInBrowser, Command } from '@tauri-apps/plugin-shell';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdDeleteOutline } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +18,16 @@ export default function SelectPluginModal(props) {
     const { t } = useTranslation();
     const toastStyle = useToastStyle();
 
+    const openPluginsFolder = async () => {
+        // Use xdg-open to open folder in file manager
+        try {
+            await new Command('xdg-open', ['/usr/share/pot-f-desktop/plugins/']).execute();
+        } catch {
+            // Fallback to GitHub
+            openInBrowser('https://github.com/frs777/pot-f-desktop/tree/main/pot-app-plugin-list');
+        }
+    };
+
     return (
         <Modal
             isOpen={isOpen}
@@ -30,16 +40,18 @@ export default function SelectPluginModal(props) {
                     <>
                         <ModalHeader>{t('config.service.add_service')}</ModalHeader>
                         <ModalBody>
+                            <Button
+                                fullWidth
+                                variant='flat'
+                                onPress={openPluginsFolder}
+                            >
+                                <div className='w-full'>{t('config.service.view_plugin_list')}</div>
+                            </Button>
+
                             {Object.keys(pluginList).length === 0 && (
-                                <Button
-                                    fullWidth
-                                    variant='flat'
-                                    onPress={() => {
-                                        openInBrowser('http://pot-app.com/plugin.html');
-                                    }}
-                                >
-                                    <div className='w-full'>{t('config.service.view_plugin_list')}</div>
-                                </Button>
+                                <div className='text-center text-sm opacity-60 py-4'>
+                                    {t('config.service.no_plugins', 'Brak zainstalowanych wtyczek')}
+                                </div>
                             )}
 
                             {Object.keys(pluginList).map((x) => {

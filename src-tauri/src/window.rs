@@ -270,6 +270,7 @@ pub fn text_translate(text: String) {
     let state: tauri::State<StringWrapper> = app_handle.state();
     state.0.lock().unwrap().replace_range(.., &text);
     let window = translate_window();
+    // Always emit new_text to clear previous content
     window.emit("new_text", text).unwrap();
 }
 

@@ -1,7 +1,11 @@
 {
-    "name": "pot",
+    "name": "pot-f-desktop",
     "private": true,
-    "version": "3.0.7",
+    "version": "0.1.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/frs777/pot-f-desktop"
+    },
     "type": "module",
     "scripts": {
         "dev": "vite",

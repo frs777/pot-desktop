@@ -1,5 +1,6 @@
 use crate::config::{get, set};
 use crate::window::text_translate;
+use log::info;
 use serde_json;
 use std::sync::Mutex;
 use tauri::Manager;
@@ -33,7 +34,7 @@ pub fn start_clipboard_monitor(app_handle: tauri::AppHandle) {
 #[tauri::command]
 pub fn toggle_clipboard_monitor(app: tauri::AppHandle) {
     let state = app.state::<ClipboardMonitorEnableWrapper>();
-    let (current, new_value) = {
+    let (was_enabled, new_value) = {
         if let Ok(mut monitor) = state.0.try_lock() {
             let current = monitor.contains("true");
             let new_value = if current { "false" } else { "true" }.to_string();
@@ -43,8 +44,17 @@ pub fn toggle_clipboard_monitor(app: tauri::AppHandle) {
             return;
         }
     };
+
+    // If enabling clipboard monitor, restart the monitoring loop
+    if !was_enabled {
+        info!("Clipboard monitor enabled, starting monitoring loop");
+        start_clipboard_monitor(app.clone());
+    } else {
+        info!("Clipboard monitor disabled");
+    }
+
     // Also persist to config
-    set("clipboard_monitor", serde_json::Value::Bool(!current));
+    set("clipboard_monitor", serde_json::Value::Bool(!was_enabled));
     // Rebuild tray to update the label
     let language = get("app_language").unwrap_or(serde_json::Value::String("pl".into())).as_str().unwrap_or("pl").to_string();
     let _ = crate::tray::update_tray(app.clone(), language, new_value);

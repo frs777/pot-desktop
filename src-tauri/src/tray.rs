@@ -101,11 +101,12 @@ pub fn build_tray(app: &AppHandle, language: &str, copy_mode: &str) -> Result<()
         &[&show_item, &settings_item, &clipboard_item, &separator, &quit_item],
     )?;
 
-    // Check if tray already exists and update menu instead of creating new one
+    // Check if tray already exists and update menu
     let tray = app.tray_by_id(TRAY_ID);
     match tray {
         Some(existing_tray) => {
             info!("Updating existing tray menu");
+            // Replace the entire menu - this should update the labels
             existing_tray.set_menu(Some(tray_menu))?;
         }
         None => {
