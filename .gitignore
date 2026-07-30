@@ -1,46 +1,63 @@
+```
+# Rust/Cargo
+.target/
+Cargo.lock
+.cargo/
+
+# Tauri
+src-tauri/target/
+src-tauri/Cargo.lock
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build artifacts
+dist/
+build/
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.a
+*.out
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+.ENV
+.env
+
 # Logs
-logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Editor directories and files
-.idea
+# OS
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
 
-# Build artifacts
-src-tauri/target/
-*.rpm
-*.deb
-*.AppImage
-*.tar.gz
+# Coverage
+coverage/
+htmlcov/
+.coverage
 
-# IDE
-src-tauri/.cargo/
-
-# Project docs (internal)
-STAN_PROJEKTU.md
-PLAN.md
-projekt.md
-CHANGELOG.md
-CONTRIBUTING.md
-build-rpm-optimized.sh
-build-with-swap.sh
-
-# Screenshots
-*.png
-linki.png
-plugin.png
+# Temporary
+*.tmp
+*.temp
+```

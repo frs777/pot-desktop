@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=Pot-F Desktop
+Name[pl]=Pot-F Desktop
+Comment=Polski fork aplikacji do tłumaczenia tekstu i OCR
+Comment[pl]=Polski fork aplikacji do tłumaczenia tekstu i OCR
+Exec=pot-f
+Icon=com.pot-f-desktop
+Terminal=false
+Type=Application
+Categories=Utility;Translation;OCR;
+Keywords=translation;OCR;screenshot;clipboard;
+Keywords[pl]=tłumaczenie;tłumacz;OCR;zrzut ekranu;schowek;
+StartupNotify=true
+StartupWMClass=pot-f

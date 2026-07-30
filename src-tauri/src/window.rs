@@ -229,9 +229,8 @@ fn translate_window() -> WebviewWindow {
 }
 
 pub fn selection_translate() {
-    use selection::get_text;
-    // Get Selected Text
-    let text = get_text();
+    // Get Selected Text using xdotool for Linux or native methods for other platforms
+    let text = get_selected_text();
     if !text.trim().is_empty() {
         let app_handle = APP.get().unwrap();
         // Write into State
@@ -241,6 +240,41 @@ pub fn selection_translate() {
 
     let window = translate_window();
     window.emit("new_text", text).unwrap();
+}
+
+// Platform-specific text selection getter
+#[cfg(target_os = "linux")]
+fn get_selected_text() -> String {
+    use std::process::Command;
+    // Use xclip or xdotool to get selected text on Linux
+    match Command::new("xdotool").arg("getactivewindow").output() {
+        Ok(_) => {
+            // Try xclip first
+            match Command::new("xclip").arg("-o").arg("-selection").arg("primary").output() {
+                Ok(output) => String::from_utf8_lossy(&output.stdout).to_string(),
+                Err(_) => {
+                    // Fallback to xdotool key sequence
+                    match Command::new("xdotool").args(&["key", "--clearmodifiers", "ctrl+c"]).output() {
+                        Ok(_) => {
+                            std::thread::sleep(std::time::Duration::from_millis(100));
+                            match Command::new("xclip").arg("-o").output() {
+                                Ok(output) => String::from_utf8_lossy(&output.stdout).to_string(),
+                                Err(_) => String::new(),
+                            }
+                        },
+                        Err(_) => String::new(),
+                    }
+                }
+            }
+        },
+        Err(_) => String::new(),
+    }
+}
+
+#[cfg(not(target_os = "linux"))]
+fn get_selected_text() -> String {
+    use selection::get_text;
+    get_text()
 }
 
 pub fn input_translate() {
