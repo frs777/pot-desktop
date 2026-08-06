@@ -25,29 +25,68 @@ use log::info;
 use once_cell::sync::OnceCell;
 use screenshot::screenshot;
 use server::*;
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Mutex;
 use system_ocr::*;
 use tauri::Manager;
 use tauri_plugin_notification::NotificationExt;
 use tray::*;
-use updater::check_update;
 use window::config_window;
 use window::updater_window;
 
 // Global AppHandle
 pub static APP: OnceCell<tauri::AppHandle> = OnceCell::new();
 
+// Set to true when the user explicitly requests exit from the tray menu.
+// The run loop uses this to distinguish a clean shutdown from a window-close event.
+pub static SHOULD_EXIT: AtomicBool = AtomicBool::new(false);
+
 // Text to be translated
 pub struct StringWrapper(pub Mutex<String>);
 
+#[tauri::command]
+fn open_app_directory(app: tauri::AppHandle, kind: String) -> Result<(), String> {
+    let path = match kind.as_str() {
+        "logs" => app.path().app_log_dir(),
+        "config" => app.path().app_config_dir(),
+        _ => return Err(format!("Unknown app directory: {kind}")),
+    }
+    .map_err(|e| e.to_string())?;
+
+    #[cfg(target_os = "linux")]
+    std::process::Command::new("xdg-open")
+        .arg(path)
+        .spawn()
+        .map_err(|e| e.to_string())?;
+    #[cfg(target_os = "windows")]
+    std::process::Command::new("explorer")
+        .arg(path)
+        .spawn()
+        .map_err(|e| e.to_string())?;
+    #[cfg(target_os = "macos")]
+    std::process::Command::new("open")
+        .arg(path)
+        .spawn()
+        .map_err(|e| e.to_string())?;
+
+    Ok(())
+}
+
 fn main() {
-    // Fix black screen issue on Linux with WebKit2GTK
+    // The software-rendering workaround breaks transparent WebViews on Wayland.
+    // Keep it for X11 only, where it prevents WebKit2GTK black screens.
     #[cfg(target_os = "linux")]
     {
-        std::env::set_var("WEBKIT_DISABLE_COMPOSITING_MODE", "1");
-        std::env::set_var("WEBKIT_FORCE_2D_MODE", "1");
-        // Use software rendering if hardware acceleration fails
-        std::env::set_var("LIBGL_ALWAYS_SOFTWARE", "1");
+        let is_wayland = std::env::var("XDG_SESSION_TYPE")
+            .map(|session| session.eq_ignore_ascii_case("wayland"))
+            .unwrap_or(false)
+            || std::env::var_os("WAYLAND_DISPLAY").is_some();
+
+        if !is_wayland {
+            std::env::set_var("WEBKIT_DISABLE_COMPOSITING_MODE", "1");
+            std::env::set_var("WEBKIT_FORCE_2D_MODE", "1");
+            std::env::set_var("LIBGL_ALWAYS_SOFTWARE", "1");
+        }
     }
 
     tauri::Builder::default()
@@ -62,8 +101,11 @@ fn main() {
         }))
         .plugin(
             tauri_plugin_log::Builder::default()
+                .level(log::LevelFilter::Info)
                 .targets([
-                    tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir { file_name: None }),
+                    tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::LogDir {
+                        file_name: None,
+                    }),
                     tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout),
                 ])
                 .build(),
@@ -109,9 +151,6 @@ fn main() {
             if let Err(e) = tray::build_tray(app.app_handle(), "pl", "disabled") {
                 log::error!("Failed to build tray menu: {}", e);
             }
-            // Register global menu event handler for tray
-            let app_handle = app.app_handle();
-            app_handle.on_menu_event(tray::handle_menu_event);
             // Start http server
             start_server();
             // Register Global Shortcut
@@ -129,14 +168,18 @@ fn main() {
             }
             match get("proxy_enable") {
                 Some(v) => {
-                    if v.as_bool().unwrap() && get("proxy_host").map_or(false, |host| !host.as_str().unwrap().is_empty()) {
+                    if v.as_bool().unwrap()
+                        && get("proxy_host")
+                            .map_or(false, |host| !host.as_str().unwrap().is_empty())
+                    {
                         let _ = set_proxy();
                     }
                 }
                 None => {}
             }
-            // Check Update
-            check_update(app.handle().clone());
+            // Upstream Pot updates are incompatible with this Pot-F fork.
+            // Updates are distributed through the native system package instead.
+            info!("Automatic upstream updater disabled; use the system package manager");
             if let Some(engine) = get("translate_detect_engine") {
                 if engine.as_str().unwrap() == "local" {
                     init_lang_detect();
@@ -178,14 +221,18 @@ fn main() {
             aliyun,
             config_get,
             config_set,
-            toggle_clipboard_monitor
+            toggle_clipboard_monitor,
+            open_app_directory
         ])
         .build(tauri::generate_context!())
         .expect("error while running tauri application")
-        // 窗口关闭不退出
+        // Keep the application running when a window is closed unless the user
+        // explicitly chose "Quit" from the tray menu.
         .run(|_app_handle, event| {
             if let tauri::RunEvent::ExitRequested { api, .. } = event {
-                api.prevent_exit();
+                if !SHOULD_EXIT.load(Ordering::SeqCst) {
+                    api.prevent_exit();
+                }
             }
         });
 }

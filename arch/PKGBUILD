@@ -35,24 +35,23 @@ optdepends=(
     'tesseract-data-fra: French language data for OCR'
     'tesseract-data-rus: Russian language data for OCR'
     'tesseract-data-ukr: Ukrainian language data for OCR'
+    'xwayland: selection text support on Wayland sessions (required by xclip/xdotool)'
 )
 source=("$pkgname-$pkgver.tar.gz::https://github.com/frs777/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
 sha256sums=('SKIP')
 
 prepare() {
     cd "$srcdir/$pkgname-$pkgver"
-    
+
     # Install frontend dependencies
     pnpm install --frozen-lockfile
-    
-    # Build the application
-    pnpm tauri build
 }
 
 build() {
     cd "$srcdir/$pkgname-$pkgver"
-    # Binary is already built in prepare()
-    :
+
+    # Build the Tauri application
+    pnpm tauri build
 }
 
 package() {

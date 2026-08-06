@@ -262,9 +262,8 @@ export default function Translate() {
     ]);
 
     return (
-        pluginList && (
-            <div
-                className={`bg-background h-screen w-screen ${
+        <div
+            className={`bg-background h-screen w-screen ${
                     osType === 'Linux' && 'rounded-[10px] border-1 border-default-100'
                 }`}
             >
@@ -373,6 +372,5 @@ export default function Translate() {
                     </div>
                 </div>
             </div>
-        )
     );
 }

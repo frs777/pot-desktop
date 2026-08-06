@@ -2,12 +2,11 @@ use crate::{error::Error, APP};
 use dirs::config_dir;
 use log::{info, warn};
 use serde_json::{json, Value};
-use std::sync::Mutex;
+use std::sync::Arc;
 use tauri::Manager;
 use tauri::Wry;
-use tauri_plugin_store::StoreBuilder;
-use std::sync::Arc;
 use tauri_plugin_store::Store;
+use tauri_plugin_store::StoreBuilder;
 
 pub struct StoreWrapper(pub Arc<Store<Wry>>);
 
@@ -16,11 +15,11 @@ pub fn init_config(app: &mut tauri::App) {
     let config_path = config_path.join(app.config().identifier.clone());
     let config_path = config_path.join("config.json");
     info!("Load config from: {:?}", config_path);
-    let store = StoreBuilder::new(app.handle(), config_path).build().unwrap();
+    let store = StoreBuilder::new(app.handle(), config_path)
+        .build()
+        .unwrap();
 
-    let _ = store.reload().map(|_| {
-        info!("Config loaded")
-    }).map_err(|e| {
+    let _ = store.reload().map(|_| info!("Config loaded")).map_err(|e| {
         warn!("Config load error: {:?}", e);
         info!("Config not found, creating new config");
     });

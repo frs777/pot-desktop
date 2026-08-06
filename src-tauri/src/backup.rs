@@ -15,6 +15,15 @@ pub async fn webdav(
     password: String,
     name: Option<String>,
 ) -> Result<String, Error> {
+    let parsed_url = reqwest::Url::parse(&url).map_err(|_| {
+        Error::Error("WebDAV URL must be a complete http:// or https:// address".into())
+    })?;
+    if parsed_url.scheme() != "http" && parsed_url.scheme() != "https" {
+        return Err(Error::Error(
+            "WebDAV URL must use the http:// or https:// scheme".into(),
+        ));
+    }
+
     // build a client
     let client = ClientBuilder::new()
         .set_host(url.clone())
@@ -63,10 +72,10 @@ pub async fn webdav(
             let options =
                 SimpleFileOptions::default().compression_method(zip::CompressionMethod::Stored);
             zip.start_file("config.json", options)?;
-            zip.write(&std::fs::read(&config_path)?)?;
+            zip.write_all(&std::fs::read(&config_path)?)?;
             if database_path.exists() {
                 zip.start_file("history.db", options)?;
-                zip.write(&std::fs::read(&database_path)?)?;
+                zip.write_all(&std::fs::read(&database_path)?)?;
             }
             if plugin_path.exists() {
                 for entry in WalkDir::new(plugin_path) {
@@ -79,7 +88,7 @@ pub async fn webdav(
                     if path.is_file() {
                         info!("adding file {path:?} as {file_name:?} ...");
                         zip.start_file(file_name, options)?;
-                        zip.write(&std::fs::read(entry.path())?)?;
+                        zip.write_all(&std::fs::read(entry.path())?)?;
                     } else {
                         continue;
                     }
@@ -132,10 +141,10 @@ pub async fn local(operate: &str, path: String) -> Result<String, Error> {
             let options =
                 SimpleFileOptions::default().compression_method(zip::CompressionMethod::Stored);
             zip.start_file("config.json", options)?;
-            zip.write(&std::fs::read(&config_path)?)?;
+            zip.write_all(&std::fs::read(&config_path)?)?;
             if database_path.exists() {
                 zip.start_file("history.db", options)?;
-                zip.write(&std::fs::read(&database_path)?)?;
+                zip.write_all(&std::fs::read(&database_path)?)?;
             }
             if plugin_path.exists() {
                 for entry in WalkDir::new(plugin_path) {
@@ -148,7 +157,7 @@ pub async fn local(operate: &str, path: String) -> Result<String, Error> {
                     if path.is_file() {
                         info!("adding file {path:?} as {file_name:?} ...");
                         zip.start_file(file_name, options)?;
-                        zip.write(&std::fs::read(entry.path())?)?;
+                        zip.write_all(&std::fs::read(entry.path())?)?;
                     } else {
                         continue;
                     }

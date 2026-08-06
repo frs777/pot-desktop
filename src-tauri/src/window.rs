@@ -1,20 +1,17 @@
-use std::fs;
-use tauri::{LogicalSize, PhysicalSize, PhysicalPosition};
-
+use tauri::{LogicalSize, PhysicalPosition, PhysicalSize};
 
 use crate::config::get;
 use crate::config::set;
 use crate::StringWrapper;
 use crate::APP;
-use dirs::cache_dir;
 use log::{info, warn};
-use tauri::Manager;
-use tauri::Monitor;
 use tauri::webview::WebviewWindow;
 use tauri::webview::WebviewWindowBuilder;
-use tauri::WebviewUrl;
 use tauri::Emitter;
 use tauri::Listener;
+use tauri::Manager;
+use tauri::Monitor;
+use tauri::WebviewUrl;
 #[cfg(any(target_os = "macos", target_os = "windows"))]
 use window_shadows::set_shadow;
 
@@ -25,15 +22,11 @@ fn get_daemon_window() -> WebviewWindow {
         Some(v) => v,
         None => {
             warn!("Daemon window not found, create new daemon window!");
-            WebviewWindowBuilder::new(
-                app_handle,
-                "daemon",
-                WebviewUrl::App("daemon.html".into()),
-            )
-            .title("Daemon")
-            .visible(false)
-            .build()
-            .unwrap()
+            WebviewWindowBuilder::new(app_handle, "daemon", WebviewUrl::App("daemon.html".into()))
+                .title("Daemon")
+                .visible(false)
+                .build()
+                .unwrap()
         }
     }
 }
@@ -137,6 +130,9 @@ fn translate_window() -> WebviewWindow {
             Position { x: 0, y: 0 }
         }
     };
+    // A freshly created hidden window can report no current/primary monitor on
+    // Wayland. Resolve the monitor from the daemon window before creating it.
+    let monitor = get_current_monitor(mouse_position.x, mouse_position.y);
     let (window, exists) = build_window("translate", "Translate");
     if exists {
         return window;
@@ -158,7 +154,6 @@ fn translate_window() -> WebviewWindow {
         }
     };
 
-    let monitor = window.current_monitor().unwrap().unwrap();
     let dpi = monitor.scale_factor();
 
     window
@@ -201,10 +196,7 @@ fn translate_window() -> WebviewWindow {
             }
 
             window
-                .set_position(PhysicalPosition::new(
-                    mouse_position.x,
-                    mouse_position.y,
-                ))
+                .set_position(PhysicalPosition::new(mouse_position.x, mouse_position.y))
                 .unwrap();
         }
         _ => {
@@ -250,23 +242,31 @@ fn get_selected_text() -> String {
     match Command::new("xdotool").arg("getactivewindow").output() {
         Ok(_) => {
             // Try xclip first
-            match Command::new("xclip").arg("-o").arg("-selection").arg("primary").output() {
+            match Command::new("xclip")
+                .arg("-o")
+                .arg("-selection")
+                .arg("primary")
+                .output()
+            {
                 Ok(output) => String::from_utf8_lossy(&output.stdout).to_string(),
                 Err(_) => {
                     // Fallback to xdotool key sequence
-                    match Command::new("xdotool").args(&["key", "--clearmodifiers", "ctrl+c"]).output() {
+                    match Command::new("xdotool")
+                        .args(&["key", "--clearmodifiers", "ctrl+c"])
+                        .output()
+                    {
                         Ok(_) => {
                             std::thread::sleep(std::time::Duration::from_millis(100));
                             match Command::new("xclip").arg("-o").output() {
                                 Ok(output) => String::from_utf8_lossy(&output.stdout).to_string(),
                                 Err(_) => String::new(),
                             }
-                        },
+                        }
                         Err(_) => String::new(),
                     }
                 }
             }
-        },
+        }
         Err(_) => String::new(),
     }
 }

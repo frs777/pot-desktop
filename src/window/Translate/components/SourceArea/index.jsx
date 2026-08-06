@@ -96,7 +96,7 @@ export default function SourceArea(props) {
                                 setSourceText(newText);
                             }
                             detect_language(newText).then(() => {
-                                syncSourceText();
+                                syncSourceText(newText);
                             });
                         },
                         (e) => {
@@ -133,7 +133,7 @@ export default function SourceArea(props) {
                                     setSourceText(newText);
                                 }
                                 detect_language(newText).then(() => {
-                                    syncSourceText();
+                                    syncSourceText(newText);
                                 });
                             },
                             (e) => {
@@ -160,7 +160,7 @@ export default function SourceArea(props) {
                 setSourceText(newText);
             }
             detect_language(newText).then(() => {
-                syncSourceText();
+                syncSourceText(newText);
             });
         }
     };
@@ -169,7 +169,7 @@ export default function SourceArea(props) {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
             detect_language(sourceText).then(() => {
-                syncSourceText();
+                syncSourceText(sourceText);
             });
         }
         if (event.key === 'Escape') {
@@ -255,7 +255,9 @@ export default function SourceArea(props) {
     }, [sourceText]);
 
     const detect_language = async (text) => {
-        setDetectLanguage(await detect(text));
+        const detectedLanguage = await detect(text);
+        setDetectLanguage(detectedLanguage);
+        void info(`[translation-debug] source detected=${detectedLanguage} length=${text.length}`);
     };
 
     let sourceTextChangeTimer = null;
@@ -268,7 +270,7 @@ export default function SourceArea(props) {
             }
             sourceTextChangeTimer = setTimeout(() => {
                 detect_language(text).then(() => {
-                    syncSourceText();
+                    syncSourceText(text);
                 });
             }, 1000);
         }
@@ -422,7 +424,7 @@ export default function SourceArea(props) {
                                         const newText = sourceText.replace(/\-\s+/g, '').replace(/\s+/g, ' ');
                                         setSourceText(newText);
                                         detect_language(newText).then(() => {
-                                            syncSourceText();
+                                            syncSourceText(newText);
                                         });
                                     }}
                                 >
@@ -464,7 +466,7 @@ export default function SourceArea(props) {
                             startContent={<HiTranslate className='text-[16px]' />}
                             onPress={() => {
                                 detect_language(sourceText).then(() => {
-                                    syncSourceText();
+                                    syncSourceText(sourceText);
                                 });
                             }}
                         />

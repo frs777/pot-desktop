@@ -1,6 +1,5 @@
 use crate::config::{get, set};
-use log::{info, warn, error};
-use tauri::Manager;
+use log::{error, info, warn};
 use tauri_plugin_updater::UpdaterExt;
 
 pub fn check_update(app_handle: tauri::AppHandle) {
@@ -11,17 +10,17 @@ pub fn check_update(app_handle: tauri::AppHandle) {
             true
         }
     };
-    
+
     if enable {
         info!("Update check enabled, checking for updates...");
-        
+
         tauri::async_runtime::spawn(async move {
             match app_handle.updater() {
                 Ok(updater) => {
                     match updater.check().await {
                         Ok(Some(update)) => {
                             info!("Update available: {}", update.version);
-                            
+
                             // Download and install the update
                             // download() requires two callbacks: progress and download complete
                             match update.download_and_install(|_, _| {}, || {}).await {

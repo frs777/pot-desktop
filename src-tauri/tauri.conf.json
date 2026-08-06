@@ -6,15 +6,14 @@
         "devUrl": "http://127.0.0.1:1420"
     },
     "productName": "Pot-F",
-    "version": "0.1.0",
+    "version": "0.1.0-10",
     "identifier": "com.pot-f-desktop.desktop",
     "plugins": {
         "updater": {
             "active": false,
             "dialog": false,
             "endpoints": [
-                "https://dl.pot-app.com/https://github.com/pot-app/pot-desktop/releases/download/updater/update.json",
-                "https://github.com/pot-app/pot-desktop/releases/download/updater/update.json"
+                "https://github.com/frs777/pot-f-desktop/releases/latest/download/update.json"
             ],
             "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDVBRTQxQTNDQjM5QzQzM0EKUldRNlE1eXpQQnJrV21mM1Bram5LRlF6UDA3K0Jab2FYL2lZSWhXTE5McWs2NUdJS0dtYkd5VGMK"
         }

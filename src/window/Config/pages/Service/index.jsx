@@ -14,7 +14,7 @@ import { ServiceType } from '../../../../utils/service_instance';
 let unlisten = null;
 
 export default function Service() {
-    const [pluginList, setPluginList] = useState(null);
+    const [pluginList, setPluginList] = useState({ translate: {}, tts: {}, recognize: {}, collection: {} });
     const { t } = useTranslation();
 
     const loadPluginList = async () => {

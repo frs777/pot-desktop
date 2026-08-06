@@ -2,9 +2,9 @@ use crate::config::{get, set};
 use crate::window::{input_translate, ocr_recognize, ocr_translate, selection_translate};
 use crate::APP;
 use log::{info, warn};
-use tauri::AppHandle;
-use tauri_plugin_global_shortcut::{GlobalShortcutExt, Shortcut, Modifiers, Code, ShortcutState};
 use std::str::FromStr;
+use tauri::AppHandle;
+use tauri_plugin_global_shortcut::{Code, GlobalShortcutExt, Modifiers, Shortcut, ShortcutState};
 
 /// Parse a shortcut string like "Ctrl+Shift+T" into a Shortcut object
 pub fn parse_shortcut_str(input: &str) -> Result<Shortcut, String> {
@@ -32,14 +32,18 @@ pub fn parse_shortcut_str(input: &str) -> Result<Shortcut, String> {
     }
 
     let key_str = key_parts.first().ok_or("No target key")?;
-    
-    let code = Code::from_str(key_str)
-        .map_err(|_| format!("Unknown key: `{}`", key_str))?;
+
+    let code = Code::from_str(key_str).map_err(|_| format!("Unknown key: `{}`", key_str))?;
 
     Ok(Shortcut::new(Some(modifiers), code))
 }
 
-fn register_shortcut_for(app_handle: &AppHandle, name: &str, handler: impl Fn() + Send + Sync + 'static, key: &str) -> Result<(), String> {
+fn register_shortcut_for(
+    app_handle: &AppHandle,
+    name: &str,
+    handler: impl Fn() + Send + Sync + 'static,
+    key: &str,
+) -> Result<(), String> {
     let hotkey = {
         if key.is_empty() {
             match get(name) {
@@ -56,20 +60,23 @@ fn register_shortcut_for(app_handle: &AppHandle, name: &str, handler: impl Fn() 
 
     if !hotkey.is_empty() {
         info!("Registering global shortcut: {} for {}", hotkey, name);
-        
+
         match parse_shortcut_str(&hotkey) {
             Ok(shortcut) => {
                 let handler_arc = std::sync::Arc::new(handler);
                 let name_clone = name.to_string();
-                
+
                 // Register with the global shortcut plugin
-                let result = app_handle.global_shortcut().on_shortcut(shortcut, move |_app, _sc, event| {
-                    if matches!(event.state(), ShortcutState::Pressed) {
-                        info!("Shortcut triggered: {}", name_clone);
-                        let h = std::sync::Arc::clone(&handler_arc);
-                        h();
-                    }
-                });
+                let result =
+                    app_handle
+                        .global_shortcut()
+                        .on_shortcut(shortcut, move |_app, _sc, event| {
+                            if matches!(event.state(), ShortcutState::Pressed) {
+                                info!("Shortcut triggered: {}", name_clone);
+                                let h = std::sync::Arc::clone(&handler_arc);
+                                h();
+                            }
+                        });
 
                 if let Err(e) = result {
                     warn!("Failed to register shortcut {}: {}", name, e);
@@ -97,8 +104,12 @@ pub fn register_shortcut(shortcut: &str) -> Result<(), String> {
         "hotkey_input_translate" => {
             register_shortcut_for(app_handle, "hotkey_input_translate", input_translate, "")?
         }
-        "hotkey_ocr_recognize" => register_shortcut_for(app_handle, "hotkey_ocr_recognize", ocr_recognize, "")?,
-        "hotkey_ocr_translate" => register_shortcut_for(app_handle, "hotkey_ocr_translate", ocr_translate, "")?,
+        "hotkey_ocr_recognize" => {
+            register_shortcut_for(app_handle, "hotkey_ocr_recognize", ocr_recognize, "")?
+        }
+        "hotkey_ocr_translate" => {
+            register_shortcut_for(app_handle, "hotkey_ocr_translate", ocr_translate, "")?
+        }
         "all" => {
             register_shortcut_for(
                 app_handle,

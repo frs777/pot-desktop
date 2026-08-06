@@ -10,7 +10,7 @@ export const Body = {
         return { type: 'Text', payload: text };
     },
     json(data) {
-        return { type: 'Json', payload: JSON.stringify(data) };
+        return { type: 'Json', payload: data };
     },
     bytes(bytes) {
         return { type: 'Bytes', payload: bytes };
@@ -32,6 +32,7 @@ export async function fetch(url, options = {}) {
 
     // Handle v1-style body objects: { type: "Form", payload: {...} }
     let body = options.body;
+    let isJsonBody = false;
     if (body && typeof body === 'object' && 'type' in body && 'payload' in body) {
         // Already in v1 format, convert to native fetch
         if (body.type === 'Form') {
@@ -47,6 +48,7 @@ export async function fetch(url, options = {}) {
             body = formData;
         } else if (body.type === 'Json') {
             body = JSON.stringify(body.payload);
+            isJsonBody = true;
         } else if (body.type === 'Text') {
             body = body.payload;
         }
@@ -55,8 +57,11 @@ export async function fetch(url, options = {}) {
     // Build fetch options
     const fetchOptions = {
         method: options.method || 'GET',
-        headers: options.headers || options.header || {},
+        headers: { ...(options.headers || options.header || {}) },
     };
+    if (isJsonBody && !Object.keys(fetchOptions.headers).some((key) => key.toLowerCase() === 'content-type')) {
+        fetchOptions.headers['Content-Type'] = 'application/json';
+    }
     if (fetchOptions.method !== 'GET' && fetchOptions.method !== 'HEAD' && body !== undefined) {
         fetchOptions.body = body;
     }

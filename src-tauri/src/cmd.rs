@@ -161,8 +161,7 @@ pub fn install_plugin(path_list: Vec<String>) -> Result<i32, Error> {
             return Err(Error::Error("Invalid Plugin: miss main.js".into()));
         }
         let config_path = dirs::config_dir().unwrap();
-        let config_path =
-            config_path.join(APP.get().unwrap().config().identifier.clone().clone());
+        let config_path = config_path.join(APP.get().unwrap().config().identifier.clone().clone());
         let config_path = config_path.join("plugins");
         let config_path = config_path.join(plugin_type);
         let plugin_path = config_path.join(file_name);

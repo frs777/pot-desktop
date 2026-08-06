@@ -94,14 +94,9 @@ export default function TargetArea(props) {
 
     // listen to translation
     useEffect(() => {
-        console.log('>>> translate useEffect triggered', {
-            sourceText: sourceText?.substring(0, 30),
-            sourceLanguage,
-            targetLanguage,
-            autoCopy,
-            hideWindow,
-            clipboardMonitor,
-        });
+        void info(
+            `[translation-debug] target=${currentTranslateServiceInstanceKey} length=${sourceText?.length ?? -1} source=${sourceLanguage ?? 'null'} targetLanguage=${targetLanguage ?? 'null'} autoCopy=${autoCopy ?? 'null'} hideWindow=${hideWindow ?? 'null'} clipboardMonitor=${clipboardMonitor ?? 'null'}`
+        );
         setResult('');
         setError('');
         if (
@@ -112,7 +107,7 @@ export default function TargetArea(props) {
             hideWindow !== null &&
             clipboardMonitor !== null
         ) {
-            console.log('>>> conditions met, calling translate()');
+            void info(`[translation-debug] conditions met target=${currentTranslateServiceInstanceKey}`);
             if (autoCopy === 'source' && !clipboardMonitor) {
                 writeText(sourceText).then(() => {
                     if (hideWindow) {
@@ -170,12 +165,12 @@ export default function TargetArea(props) {
     }
 
     const translate = async () => {
-        console.log('>>> translate() called, sourceText:', sourceText?.substring(0, 50), 'sourceLanguage:', sourceLanguage, 'targetLanguage:', targetLanguage);
+        void info(`[translation-debug] translate called target=${currentTranslateServiceInstanceKey}`);
         let id = nanoid();
         translateID[index] = id;
 
         const translateServiceName = getServiceName(currentTranslateServiceInstanceKey);
-        console.log('>>> translateServiceName:', translateServiceName, 'currentTranslateServiceInstanceKey:', currentTranslateServiceInstanceKey);
+        void info(`[translation-debug] service=${translateServiceName} instance=${currentTranslateServiceInstanceKey}`);
 
         if (whetherPluginService(currentTranslateServiceInstanceKey)) {
             const pluginInfo = pluginList['translate'][translateServiceName];

@@ -56,6 +56,10 @@ pub fn toggle_clipboard_monitor(app: tauri::AppHandle) {
     // Also persist to config
     set("clipboard_monitor", serde_json::Value::Bool(!was_enabled));
     // Rebuild tray to update the label
-    let language = get("app_language").unwrap_or(serde_json::Value::String("pl".into())).as_str().unwrap_or("pl").to_string();
+    let language = get("app_language")
+        .unwrap_or(serde_json::Value::String("pl".into()))
+        .as_str()
+        .unwrap_or("pl")
+        .to_string();
     let _ = crate::tray::update_tray(app.clone(), language, new_value);
 }

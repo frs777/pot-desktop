@@ -28,7 +28,7 @@ import {
 export default function History() {
     const [collectionServiceList] = useConfig('collection_service_list', []);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [pluginList, setPluginList] = useState(null);
+    const [pluginList, setPluginList] = useState({ translate: {}, collection: {} });
     const [selectedItem, setSelectItem] = useState(null);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
@@ -46,6 +46,9 @@ export default function History() {
 
     const init = async () => {
         const db = await Database.load('sqlite:history.db');
+        await db.execute(
+            'CREATE TABLE IF NOT EXISTS history(id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT NOT NULL, source TEXT NOT NULL, target TEXT NOT NULL, service TEXT NOT NULL, result TEXT NOT NULL, timestamp INTEGER NOT NULL)'
+        );
         const result = await db.select('SELECT COUNT(*) FROM history');
         if (result[0] && result[0]['COUNT(*)']) {
             setTotal(result[0]['COUNT(*)']);
@@ -53,6 +56,9 @@ export default function History() {
     };
     const getData = async () => {
         const db = await Database.load('sqlite:history.db');
+        await db.execute(
+            'CREATE TABLE IF NOT EXISTS history(id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT NOT NULL, source TEXT NOT NULL, target TEXT NOT NULL, service TEXT NOT NULL, result TEXT NOT NULL, timestamp INTEGER NOT NULL)'
+        );
         let result = await db.select('SELECT * FROM history ORDER BY id DESC LIMIT 20 OFFSET $1', [20 * (page - 1)]);
         setItems(result);
     };

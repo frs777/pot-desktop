@@ -1,0 +1,37 @@
+   (!) Some chunks are larger than 500 kB after minification. Consider:
+   - Using dynamic import() to code-split the application
+   - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+   - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+   ✓ built in 14.84s
+      Compiling pot-f v0.1.0 (/home/frs/Projekty/TLUMACZENIA/pot/pot-desktop/src-tauri)
+       Finished `release` profile [optimized] target(s) in 2m 04s
+   warning: the following packages contain code that will be rejected by a future version of Rust: screenshots v0.7.2, wl-clipboard-rs v0.8.1
+   note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 2`
+          Built application at: /home/frs/Projekty/TLUMACZENIA/pot/pot-desktop/src-tauri/target/release/pot-f
+           Info Patching /home/frs/Projekty/TLUMACZENIA/pot/pot-desktop/src-tauri/target/release/pot-f with bundle type information: deb
+       Bundling Pot-F_0.1.0_amd64.deb (/home/frs/Projekty/TLUMACZENIA/pot/pot-desktop/src-tauri/target/release/bundle/deb/Pot-F_0.1.0_amd64.deb)
+           Info Patching /home/frs/Projekty/TLUMACZENIA/pot/pot-desktop/src-tauri/target/release/pot-f with bundle type information: rpm
+       Bundling Pot-F-0.1.0-1.x86_64.rpm (/home/frs/Projekty/TLUMACZENIA/pot/pot-desktop/src-tauri/target/release/bundle/rpm/Pot-F-0.1.0-1.x86_64.rpm)
+
+ ● Proces wciąż trwa - tworzy paczki deb i rpm. Poczekajmy na zakończenie. Może to jeszcze chwilę potrwać.
+
+ ● Used TaskOutput (bash-ih13kia0)
+   retrieval_status: not_ready
+   task_id: bash-ih13kia0
+   description: Bash: sleep 30 && ps -p 35082 -o pid,etime,cmd 2>/dev/null || echo…
+   status: running
+   detached: true
+   started_at: 1785791973426
+   timeout_ms: 60000
+   kind: process
+   command: sleep 30 && ps -p 35082 -o pid,etime,cmd 2>/dev/null || echo "tauri build finished"
+   pid: 36319
+   output_size_bytes: 0
+   output_preview_bytes: 0
+   output_truncated: false
+   full_output_available: false
+
+   [output]
+   [no output available]
+
+ ● bash task completed in background (Bash: sleep 30 && ps -p 35082 -o pid,etime,cmd 2>/dev/null || echo… · exit 0)

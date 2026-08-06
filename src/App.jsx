@@ -1,7 +1,7 @@
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { BrowserRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { warn } from '@tauri-apps/plugin-log';
+import { warn, error as logError } from '@tauri-apps/plugin-log';
 import React, { useEffect } from 'react';
 import { useTheme } from 'next-themes';
 
@@ -38,7 +38,19 @@ export default function App() {
     const { i18n } = useTranslation();
 
     useEffect(() => {
-        // Store auto-reloads via file watcher
+        const handleError = (event) => {
+            void logError(`[frontend] ${event.message} at ${event.filename}:${event.lineno}:${event.colno}`);
+        };
+        const handleRejection = (event) => {
+            const reason = event.reason instanceof Error ? event.reason.stack || event.reason.message : String(event.reason);
+            void logError(`[frontend-unhandled-rejection] ${reason}`);
+        };
+        window.addEventListener('error', handleError);
+        window.addEventListener('unhandledrejection', handleRejection);
+        return () => {
+            window.removeEventListener('error', handleError);
+            window.removeEventListener('unhandledrejection', handleRejection);
+        };
     }, []);
 
     useEffect(() => {

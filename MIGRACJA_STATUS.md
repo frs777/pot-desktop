@@ -2,6 +2,25 @@
 
 ## 📋 Status Migracji i Napraw
 
+**Ostatnia aktualizacja:** 2026-08-06
+
+### Aktualny stan weryfikacji
+
+- Frontend (`pnpm build`) kompiluje się poprawnie.
+- Backend Rust/Tauri (`pnpm tauri build --no-bundle`) kompiluje się poprawnie.
+- Binarka powstaje w `src-tauri/target/release/pot-f`.
+- Pełny `pnpm tauri build` tworzy pakiety DEB i RPM, ale etap AppImage kończy się błędem narzędzia `linuxdeploy`. AppImage nie jest obecnie wymagany.
+- Utworzono paczkę testową Arch `arch/pot-f-desktop-0.1.0-9-x86_64.pkg.tar.zst`; `namcap` nie zgłasza błędów, jedynie ostrzeżenia o zależnościach funkcjonalnych. Paczkę `0.1.0-3` przeniesiono do kosza na życzenie użytkownika; pozostałe wersje testowe zachowano.
+- Ustawienia są widoczne, natomiast okno tłumaczenia w `0.1.0-2` pozostawało puste. W `0.1.0-3` rama okna tłumaczenia renderuje się zawsze. W `0.1.0-4` przywrócono uprawnienia Tauri do zamykania, minimalizacji, maksymalizacji, przeciągania i przypinania okien; działanie kontrolek potwierdzono.
+- Próba rozwiązania problemu przez zmianę wspólnego `src-tauri/src/window.rs` została wycofana. Właściwe źródło problemu znaleziono w `src-tauri/src/main.rs`: obejście wyłączające kompozytor WebKit i wymuszające renderowanie programowe było stosowane na każdym Linuksie. Od `0.1.0-2` jest stosowane tylko poza sesją Wayland.
+- Kod `pot-f-desktop` zawiera znacznie więcej usług wbudowanych (m.in. Alibaba, Baidu, Bing, Caiyun, Cambridge, DeepL, Google, OpenAI, Gemini, Tencent, Volcengine, Youdao, OCR i TTS). Siedem usług było jedynie wcześniej aktywnych w konfiguracji użytkownika. Usługi wymagające kluczy API można dodać później z okna „Dodaj usługę”. Zewnętrzne pluginy społecznościowe pozostają przeznaczone do osobnej paczki AUR. W `0.1.0-5` naprawiono podwójne kodowanie JSON w wrapperze HTTP, a w `0.1.0-8` dodano pełne zakresy ścieżek dla znanych domen wszystkich usług wbudowanych.
+- W `0.1.0-6` poprawiono synchronizację lokalnego tekstu z atomem Jotai: przekazywana jest jawnie bieżąca wartość, co usuwa możliwość uruchomienia tłumaczenia dla poprzedniego/pustego tekstu. Dodano trwałe logi `[translation-debug]` bez zapisywania treści użytkownika. `src-tauri/tauri.linux.conf.json` pozostaje pusty.
+- W `0.1.0-7` naprawiono puste strony Usługi i Historia w ustawieniach, dodano uprawnienie zapisu SQL, dostęp Aliyun, walidację URL WebDAV, otwieranie katalogów logów/konfiguracji, przełącznik schowka w trayu oraz globalne logowanie wyjątków frontendu.
+- W `0.1.0-8` poprawiono zakresy HTTP Tauri 2: domeny wszystkich usług wbudowanych obejmują teraz ich pełne ścieżki API. Dodano też dostęp rekurencyjny do katalogu `$APPCONFIG/plugins`, którego brak powodował błąd `forbidden path` przy ładowaniu wtyczek. Dowolne domeny wtyczek społecznościowych nie zostały globalnie dopuszczone ze względów bezpieczeństwa.
+- W `0.1.0-9` naprawiono panic `Nie można pobrać monitora` przy tworzeniu ukrytego okna tłumaczenia na Waylandzie, dodano uprawnienia `window|show` i `window|set_focus` oraz wyłączono aktualizator niezgodnego upstream Pot `4.0.0`. Test binarki potwierdził otwarcie okna i tłumaczenie Google. Numer `0.1.0-9` jest widoczny w stronie O aplikacji.
+- Repozytorium źródłowe: `https://github.com/frs777/pot-desktop.git`, bieżący commit: `ea3d1c4`.
+- Tag `v0.1.0` nie istnieje jeszcze w zdalnym repozytorium, dlatego źródłowy PKGBUILD do publikacji w AUR wymaga jeszcze poprawnego URL/tagu i sum kontrolnych.
+
 ### ✅ Ukończone Zadania
 
 1. **Migracja na Tauri v2** - ZAKOŃCZONA
@@ -74,20 +93,20 @@ sudo pacman -S webkit2gtk-4.1 gtk3 libayatana-appindicator librsvg \
     nodejs>=18.0.0 pnpm rust>=1.80.0
 ```
 
-### Budowanie z AUR
+### Pakiet Arch / plan publikacji w AUR
+
+Lokalna paczka testowa jest budowana z bieżącego drzewa roboczego. Publikację w AUR należy wykonać dopiero po usunięciu problemu przezroczystego okna na Waylandzie, wypchnięciu zmian i utworzeniu tagu wydania.
 
 ```bash
-# Sklonuj repozytorium
-cd /tmp
-git clone https://github.com/frs777/pot-f-desktop.git
-cd pot-f-desktop/arch
+# Repozytorium źródłowe
+git clone https://github.com/frs777/pot-desktop.git
+cd pot-desktop/arch
 
-# Zbuduj paczkę
+# Po przygotowaniu poprawnego źródłowego PKGBUILD
 makepkg -si
-
-# Lub użyj yay/paru
-yay -S pot-f-desktop
 ```
+
+Pakiet `pot-f-desktop` nie jest jeszcze gotowy do instalacji przez `yay` lub `paru`.
 
 ### Budowanie Ręczne
 
@@ -219,7 +238,8 @@ Plik `src-tauri/capabilities/default.json` zawiera teraz:
 1. **WebKit2GTK wersja**: Używamy `webkit2gtk-4.1` (kompatybilny z większością dystrybucji)
 2. **AppIndicator**: Na niektórych dystrybucjach potrzebny `libappindicator-gtk3`
 3. **Tesseract OCR**: Wymaga osobnej instalacji danych językowych
-4. **Wayland**: Funkcja wyboru tekstu może wymagać XWayland dla xclip
+4. **Tłumaczenie**: w `0.1.0-6` poprawiono synchronizację tekstu, w `0.1.0-8` zakresy HTTP, a w `0.1.0-9` panic monitora i uprawnienia pokazania okna. Bezpośredni test `0.1.0-9` na KDE/Wayland potwierdził działanie Google; pozostaje test po instalacji paczki.
+5. **Wayland / zaznaczony tekst**: funkcja wyboru tekstu może wymagać XWayland dla `xclip`/`xdotool`.
 
 ---
 
@@ -230,4 +250,5 @@ W przypadku problemów:
 2. Upewnij się że Rust >= 1.80.0
 3. Wyczyść cache: `cargo clean && pnpm clean`
 4. Sprawdź logi: `~/.config/com.pot-f-desktop.desktop/logs/`
-5. Dla Wayland: zainstaluj `xwayland` i uruchom aplikację przez XWayland
+5. Dla problemów z odczytem zaznaczenia na Waylandzie: zainstaluj `xwayland` i sprawdź `xclip`/`xdotool`.
+6. Dla niewidocznego okna na KDE/Wayland: nie modyfikuj wspólnego `window.rs`. Sprawdź warunkowe ustawianie zmiennych WebKit/GL w `src-tauri/src/main.rs`; paczka testowa z poprawką ma `pkgrel=2`.

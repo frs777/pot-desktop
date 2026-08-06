@@ -28,7 +28,7 @@ export default function General() {
     const [fontList, setFontList] = useState(null);
     const [checkUpdate, setCheckUpdate] = useConfig('check_update', true);
     const [serverPort, setServerPort] = useConfig('server_port', 60828);
-    const [appLanguage, setAppLanguage] = useConfig('app_language', 'en');
+    const [appLanguage, setAppLanguage] = useConfig('app_language', 'pl');
     const [appTheme, setAppTheme] = useConfig('app_theme', 'system');
     const [appFont, setAppFont] = useConfig('app_font', 'default');
     const [appFallbackFont, setAppFallbackFont] = useConfig('app_fallback_font', 'default');
@@ -50,6 +50,7 @@ export default function General() {
         zh_cn: '简体中文',
         zh_tw: '繁體中文',
         en: 'English',
+        pl: 'Polski',
         ja: '日本語',
         ko: '한국어',
         fr: 'Français',
@@ -187,6 +188,12 @@ export default function General() {
                                         startContent={<span className={`fi fi-${LanguageFlag.en}`} />}
                                     >
                                         English
+                                    </DropdownItem>
+                                    <DropdownItem
+                                        key='pl'
+                                        startContent={<span className={`fi fi-${LanguageFlag.pl}`} />}
+                                    >
+                                        Polski
                                     </DropdownItem>
                                     <DropdownItem
                                         key='ja'

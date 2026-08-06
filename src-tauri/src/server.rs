@@ -2,8 +2,6 @@ use crate::config::{get, set};
 use crate::window::*;
 use log::{info, warn};
 use std::thread;
-use tauri::Manager;
-use tauri_plugin_notification::NotificationExt;
 use tiny_http::{Request, Response, Server};
 
 pub fn start_server() {

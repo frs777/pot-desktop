@@ -4932,7 +4932,7 @@ dependencies = [
 
 [[package]]
 name = "pot-f"
-version = "0.1.0"
+version = "0.1.0-10"
 dependencies = [
  "arboard",
  "base64 0.22.1",
@@ -4972,6 +4972,7 @@ dependencies = [
  "walkdir",
  "window-shadows",
  "windows 0.58.0",
+ "xdg",
  "zip 2.4.2",
 ]
 
@@ -9624,6 +9625,12 @@ dependencies = [
  "libc",
  "quick-xml 0.30.0",
 ]
+
+[[package]]
+name = "xdg"
+version = "2.5.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "213b7324336b53d2414b2db8537e56544d981803139155afa84f76eeebb7a546"
 
 [[package]]
 name = "xkbcommon"
