@@ -28,7 +28,7 @@
 - W katalogu głównym znajduje się tylko plik index.html z przekierowaniem do /docs/.
 - Workflow GitHub Actions wdraża teraz katalog docs/.
 - Przycisk pobierania paczki Arch jest naprawiony.
-## Aktualizacja dokumentacji (2026-08-07 - Ostateczna)
-- Przejście na płaską strukturę w root w celu naprawy 404.
-- Usunięto katalog 'docs/'.
-- Pliki stron są teraz bezpośrednio w głównym katalogu.
+## Aktualizacja dokumentacji (2026-08-07 - Ostateczna - Naprawa 404)
+- Struktura plików spłaszczona: `index.html` (PL) i `index-en.html` (EN) w głównym katalogu.
+- Usunięto katalogi `docs/` i `www/` oraz błędne przekierowania, które powodowały 404.
+- GitHub Pages wdraża teraz cały katalog główny (`path: '.'`). Strona powinna działać poprawnie pod adresem: https://frs777.github.io/pot-desktop/
