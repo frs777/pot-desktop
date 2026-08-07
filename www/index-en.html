@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pot-F Desktop - Aplikacja do tłumaczenia i OCR</title>
+    <title>Pot-F Desktop - Translation & OCR App for Linux</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: #fff; }
@@ -83,9 +83,9 @@
 <header>
     <div class="container">
         <h1>🌐 Pot-F Desktop</h1>
-        <p>Aplikacja do tłumaczenia tekstu i OCR dla systemów Linux</p>
+        <p>Text translation and OCR application for Linux systems</p>
         <p style="font-size: 0.95em; opacity: 0.85; margin-top: 5px;">
-            Fork projektu <a href="https://github.com/pot-app/pot-desktop" style="color: #bbdefb; text-decoration: underline;">pot-app/pot-desktop</a> (Windows + macOS + Linux)
+            Fork of <a href="https://github.com/pot-app/pot-desktop" style="color: #bbdefb; text-decoration: underline;">pot-app/pot-desktop</a> (Windows + macOS + Linux)
         </p>
         <div class="badge-row">
             <span class="badge">📦 Tauri 2.x</span>
@@ -94,83 +94,83 @@
             <span class="badge">📝 GPL-3.0</span>
         </div>
         <div style="margin-top: 30px;">
-            <a href="https://github.com/frs777/pot-f-desktop/releases/latest" class="btn">⬇ Pobierz</a>
+            <a href="https://github.com/frs777/pot-f-desktop/releases/latest" class="btn">⬇ Download</a>
             <a href="https://github.com/frs777/pot-f-desktop" class="btn btn-outline">⭐ GitHub</a>
-            <a href="index-en.html" class="btn btn-outline">🌐 English</a>
+            <a href="index.html" class="btn btn-outline">🇵🇱 Polski</a>
         </div>
     </div>
 </header>
 
 <nav>
     <ul>
-        <li><a href="#funkcje">Funkcje</a></li>
-        <li><a href="#uslugi">Usługi</a></li>
-        <li><a href="#wtyczki">Wtyczki</a></li>
-        <li><a href="#instalacja">Instalacja</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#plugins">Plugins</a></li>
+        <li><a href="#installation">Installation</a></li>
         <li><a href="#wayland">Wayland</a></li>
         <li><a href="#api">API</a></li>
-        <li><a href="#budowa">Budowa</a></li>
+        <li><a href="#building">Building</a></li>
     </ul>
 </nav>
 
-<section id="opis">
+<section id="about">
     <div class="container">
-        <h2>O Projekcie</h2>
+        <h2>About the Project</h2>
         <p style="font-size: 1.1em; margin-top: 20px;">
-            <strong>Pot-F Desktop</strong> to polski fork aplikacji <a href="https://github.com/pot-app/pot-desktop">pot-app/pot-desktop</a> 
-            autorstwa Pylogmon. Projekt dostosowuje aplikację do polskich użytkowników oraz systemów z rodziny Linux (w szczególności Fedora 43).
+            <strong>Pot-F Desktop</strong> is a Polish fork of <a href="https://github.com/pot-app/pot-desktop">pot-app/pot-desktop</a> 
+            by Pylogmon. This project adapts the application for Polish users and Linux systems (especially Fedora 43).
         </p>
         
         <div class="features-grid">
             <div class="feature-card">
-                <h4>🔄 Tłumaczenie tekstu</h4>
-                <p>Zaznacz tekst i naciśnij skrót klawiszowy lub wpisz ręcznie. Wielowątkowe tłumaczenie z wielu usług jednocześnie.</p>
+                <h4>🔄 Text Translation</h4>
+                <p>Select text and press keyboard shortcut or type manually. Multi-threaded translation from multiple services simultaneously.</p>
             </div>
             <div class="feature-card">
-                <h4>📸 OCR zrzutu ekranu</h4>
-                <p>Zrób zrzut ekranu i zamień obraz na tekst. Wsparcie dla Tesseract OCR na Linux.</p>
+                <h4>📸 Screenshot OCR</h4>
+                <p>Take a screenshot and convert image to text. Support for Tesseract OCR on Linux.</p>
             </div>
             <div class="feature-card">
-                <h4>📋 Monitorowanie schowka</h4>
-                <p>Automatyczne tłumaczenie tekstu skopiowanego do schowka w tle.</p>
+                <h4>📋 Clipboard Monitoring</h4>
+                <p>Automatic translation of text copied to clipboard in the background.</p>
             </div>
             <div class="feature-card">
-                <h4>🔊 Synteza mowy (TTS)</h4>
-                <p>Zamień przetłumaczony tekst na mowę. Wsparcie dla Lingva i wtyczek zewnętrznych.</p>
+                <h4>🔊 Text-to-Speech (TTS)</h4>
+                <p>Convert translated text to speech. Support for Lingva and external plugins.</p>
             </div>
             <div class="feature-card">
-                <h4>📚 Eksport do słowników</h4>
-                <p>Integracja z Anki i innymi słownikami do nauki słówek.</p>
+                <h4>📚 Dictionary Export</h4>
+                <p>Integration with Anki and other dictionaries for vocabulary learning.</p>
             </div>
             <div class="feature-card">
-                <h4>🔌 System wtyczek</h4>
-                <p>Rozszerzaj funkcjonalność o nowe usługi tłumaczenia, OCR i TTS.</p>
+                <h4>🔌 Plugin System</h4>
+                <p>Extend functionality with new translation, OCR and TTS services.</p>
             </div>
         </div>
     </div>
 </section>
 
-<section id="funkcje" style="background: #f8f9fa;">
+<section id="features" style="background: #f8f9fa;">
     <div class="container">
-        <h2>Funkcje</h2>
+        <h2>Features</h2>
         <ul style="list-style: none; margin-top: 20px;">
-            <li style="padding: 8px 0;"><span class="check">✅</span> Wielowątkowe tłumaczenie z wielu usług jednocześnie</li>
-            <li style="padding: 8px 0;"><span class="check">✅</span> Rozpoznawanie tekstu (OCR) z wielu usług</li>
-            <li style="padding: 8px 0;"><span class="check">✅</span> Synteza mowy (TTS)</li>
-            <li style="padding: 8px 0;"><span class="check">✅</span> Eksport do słowników (Anki, itd.)</li>
-            <li style="padding: 8px 0;"><span class="check">✅</span> Wywołanie zewnętrzne przez HTTP API</li>
-            <li style="padding: 8px 0;"><span class="check">✅</span> System wtyczek rozszerzający funkcjonalność</li>
-            <li style="padding: 8px 0;"><span class="check">✅</span> Wsparcie dla wszystkich platform PC (Windows, macOS, Linux)</li>
-            <li style="padding: 8px 0;"><span class="check">✅</span> Wielojęzyczność (domyślnie polski interfejs)</li>
+            <li style="padding: 8px 0;"><span class="check">✅</span> Multi-threaded translation from multiple services simultaneously</li>
+            <li style="padding: 8px 0;"><span class="check">✅</span> Text recognition (OCR) from multiple services</li>
+            <li style="padding: 8px 0;"><span class="check">✅</span> Text-to-Speech (TTS)</li>
+            <li style="padding: 8px 0;"><span class="check">✅</span> Dictionary export (Anki, etc.)</li>
+            <li style="padding: 8px 0;"><span class="check">✅</span> External invocation via HTTP API</li>
+            <li style="padding: 8px 0;"><span class="check">✅</span> Plugin system for extensibility</li>
+            <li style="padding: 8px 0;"><span class="check">✅</span> Support for all PC platforms (via original project)</li>
+            <li style="padding: 8px 0;"><span class="check">✅</span> Multilingual (Polish interface by default)</li>
         </ul>
     </div>
 </section>
 
-<section id="uslugi">
+<section id="services">
     <div class="container">
-        <h2>Obsługiwane usługi</h2>
+        <h2>Supported Services</h2>
         
-        <h3>🔄 Tłumaczenie</h3>
+        <h3>🔄 Translation</h3>
         <div class="services-list">
             <div class="service-item">OpenAI</div>
             <div class="service-item">Gemini Pro</div>
@@ -186,7 +186,7 @@
             <div class="service-item">Volcengine</div>
             <div class="service-item">Azure Translator</div>
             <div class="service-item">iFLYTEK</div>
-            <div class="service-item"> + wtyczki</div>
+            <div class="service-item"> + plugins</div>
         </div>
 
         <h3>📸 OCR</h3>
@@ -198,106 +198,106 @@
             <div class="service-item">Tencent OCR</div>
             <div class="service-item">Volcengine OCR</div>
             <div class="service-item">Tesseract.js</div>
-            <div class="service-item"> + wtyczki</div>
+            <div class="service-item"> + plugins</div>
         </div>
 
         <h3>🔊 TTS</h3>
         <div class="services-list">
             <div class="service-item">Lingva</div>
             <div class="service-item">OpenAI TTS</div>
-            <div class="service-item"> + wtyczki</div>
+            <div class="service-item"> + plugins</div>
         </div>
     </div>
 </section>
 
-<section id="wtyczki" style="background: #f8f9fa;">
+<section id="plugins" style="background: #f8f9fa;">
     <div class="container">
-        <h2>System wtyczek</h2>
+        <h2>Plugin System</h2>
         <p style="margin: 20px 0;">
-            Aplikacja obsługuje 35 wtyczek w formacie <code class="inline-code">.potext</code> (ZIP archive). 
-            Wtyczki rozszerzają możliwości tłumaczenia, OCR i TTS.
+            The application supports 35 plugins in <code class="inline-code">.potext</code> format (ZIP archive). 
+            Plugins extend translation, OCR and TTS capabilities.
         </p>
         
         <table class="plugin-table">
             <thead>
                 <tr>
-                    <th>Wtyczka</th>
-                    <th>Typ</th>
-                    <th>Opis</th>
+                    <th>Plugin</th>
+                    <th>Type</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td>Baidu</td><td class="plugin-type">Translate</td><td>Tłumaczenie przez Baidu Fanyi</td></tr>
-                <tr><td>CaiYun</td><td class="plugin-type">Translate</td><td>Tłumaczenie przez CaiYun</td></tr>
-                <tr><td>Papago</td><td class="plugin-type">Translate</td><td>Tłumaczenie przez Naver Papago</td></tr>
-                <tr><td>Tencent</td><td class="plugin-type">Translate</td><td>Tłumaczenie przez Tencent Fanyi</td></tr>
-                <tr><td>Transmart</td><td class="plugin-type">Translate</td><td>Tłumaczenie przez Transmart</td></tr>
-                <tr><td>Volcengine</td><td class="plugin-type">Translate</td><td>Tłumaczenie przez Volcengine</td></tr>
-                <tr><td>Youdao</td><td class="plugin-type">Translate</td><td>Tłumaczenie przez Youdao</td></tr>
-                <tr><td>DeepSeek</td><td class="plugin-type">Translate</td><td>Tłumaczenie przez DeepSeek AI</td></tr>
-                <tr><td>Local DeepSeek-R1</td><td class="plugin-type">Translate</td><td>Lokalny model DeepSeek-R1</td></tr>
+                <tr><td>Baidu</td><td class="plugin-type">Translate</td><td>Translation via Baidu Fanyi</td></tr>
+                <tr><td>CaiYun</td><td class="plugin-type">Translate</td><td>Translation via CaiYun</td></tr>
+                <tr><td>Papago</td><td class="plugin-type">Translate</td><td>Translation via Naver Papago</td></tr>
+                <tr><td>Tencent</td><td class="plugin-type">Translate</td><td>Translation via Tencent Fanyi</td></tr>
+                <tr><td>Transmart</td><td class="plugin-type">Translate</td><td>Translation via Transmart</td></tr>
+                <tr><td>Volcengine</td><td class="plugin-type">Translate</td><td>Translation via Volcengine</td></tr>
+                <tr><td>Youdao</td><td class="plugin-type">Translate</td><td>Translation via Youdao</td></tr>
+                <tr><td>DeepSeek</td><td class="plugin-type">Translate</td><td>Translation via DeepSeek AI</td></tr>
+                <tr><td>Local DeepSeek-R1</td><td class="plugin-type">Translate</td><td>Local DeepSeek-R1 model</td></tr>
                 <tr><td>Microsoft</td><td class="plugin-type">Translate</td><td>Azure Translator</td></tr>
                 <tr><td>Azure</td><td class="plugin-type">Translate</td><td>Azure Translator API</td></tr>
-                <tr><td>Doc2X</td><td class="plugin-type">Translate/OCR</td><td>Tłumaczenie i rozpoznawanie dokumentów</td></tr>
-                <tr><td>Libre</td><td class="plugin-type">Translate</td><td>Darmowe tłumaczenie LibreTranslate</td></tr>
-                <tr><td>FreeDict</td><td class="plugin-type">Translate</td><td>Darmowy słownik online</td></tr>
-                <tr><td>Baimiao OCR</td><td class="plugin-type">Recognize</td><td>OCR przez Baimiao</td></tr>
-                <tr><td>OCR Space</td><td class="plugin-type">Recognize</td><td>OCR przez OCR.space</td></tr>
-                <tr><td>OpenAI Recognize</td><td class="plugin-type">Recognize</td><td>OCR przez OpenAI Vision</td></tr>
-                <tr><td>PaddleOCR</td><td class="plugin-type">Recognize</td><td>OCR przez PaddlePaddle</td></tr>
-                <tr><td>Qwen OCR</td><td class="plugin-type">Recognize</td><td>OCR przez Qwen AI</td></tr>
-                <tr><td>RapidOCR</td><td class="plugin-type">Recognize</td><td>Szybki OCR RapidOCR</td></tr>
-                <tr><td>Ollama Recognize</td><td class="plugin-type">Recognize</td><td>OCR przez lokalny model Ollama</td></tr>
+                <tr><td>Doc2X</td><td class="plugin-type">Translate/OCR</td><td>Document translation and recognition</td></tr>
+                <tr><td>Libre</td><td class="plugin-type">Translate</td><td>Free LibreTranslate service</td></tr>
+                <tr><td>FreeDict</td><td class="plugin-type">Translate</td><td>Free online dictionary</td></tr>
+                <tr><td>Baimiao OCR</td><td class="plugin-type">Recognize</td><td>OCR via Baimiao</td></tr>
+                <tr><td>OCR Space</td><td class="plugin-type">Recognize</td><td>OCR via OCR.space</td></tr>
+                <tr><td>OpenAI Recognize</td><td class="plugin-type">Recognize</td><td>OCR via OpenAI Vision</td></tr>
+                <tr><td>PaddleOCR</td><td class="plugin-type">Recognize</td><td>OCR via PaddlePaddle</td></tr>
+                <tr><td>Qwen OCR</td><td class="plugin-type">Recognize</td><td>OCR via Qwen AI</td></tr>
+                <tr><td>RapidOCR</td><td class="plugin-type">Recognize</td><td>Fast OCR RapidOCR</td></tr>
+                <tr><td>Ollama Recognize</td><td class="plugin-type">Recognize</td><td>OCR via local Ollama model</td></tr>
                 <tr><td>Google Recognize</td><td class="plugin-type">Recognize</td><td>Google Cloud Vision OCR</td></tr>
-                <tr><td>OpenAI TTS</td><td class="plugin-type">TTS</td><td>Synteza mowy OpenAI</td></tr>
-                <tr><td>Lingva TTS</td><td class="plugin-type">TTS</td><td>Synteza mowy Lingva</td></tr>
-                <tr><td>Youdao TTS</td><td class="plugin-type">TTS</td><td>Synteza mowy Youdao</td></tr>
-                <tr><td>Volcengine TTS</td><td class="plugin-type">TTS</td><td>Synteza mowy Volcengine</td></tr>
-                <tr><td>Anki</td><td class="plugin-type">Collection</td><td>Eksport do Anki</td></tr>
-                <tr><td>Shanbay</td><td class="plugin-type">Collection</td><td>Eksport do Shanbay</td></tr>
+                <tr><td>OpenAI TTS</td><td class="plugin-type">TTS</td><td>OpenAI text-to-speech</td></tr>
+                <tr><td>Lingva TTS</td><td class="plugin-type">TTS</td><td>Lingva text-to-speech</td></tr>
+                <tr><td>Youdao TTS</td><td class="plugin-type">TTS</td><td>Youdao text-to-speech</td></tr>
+                <tr><td>Volcengine TTS</td><td class="plugin-type">TTS</td><td>Volcengine text-to-speech</td></tr>
+                <tr><td>Anki</td><td class="plugin-type">Collection</td><td>Export to Anki</td></tr>
+                <tr><td>Shanbay</td><td class="plugin-type">Collection</td><td>Export to Shanbay</td></tr>
             </tbody>
         </table>
     </div>
 </section>
 
-<section id="instalacja">
+<section id="installation">
     <div class="container">
-        <h2>Instalacja</h2>
+        <h2>Installation</h2>
         
         <h3>Fedora 43 (RPM)</h3>
         <ol class="install-steps">
             <li>
-                Pobierz paczkę z <a href="https://github.com/frs777/pot-f-desktop/releases/latest">GitHub Releases</a>
+                Download the package from <a href="https://github.com/frs777/pot-f-desktop/releases/latest">GitHub Releases</a>
             </li>
             <li>
-                Zainstaluj:
+                Install:
                 <pre><code>sudo dnf install ./pot-f-desktop-0.1.0-1.x86_64.rpm</code></pre>
             </li>
             <li>
-                Zainstaluj wtyczki:
+                Install plugins:
                 <pre><code>sudo dnf install ./pot-f-desktop-plugins-0.1.0-1.fc43.noarch.rpm</code></pre>
             </li>
         </ol>
 
         <h3>Arch Linux / Manjaro</h3>
-        <p>Pobierz paczkę DEB i konwertuj na Arch.pkg.tar.zst:</p>
+        <p>Download DEB package and convert to Arch.pkg.tar.zst:</p>
         <pre><code>sudo debtap ./pot-f-desktop_0.1.0_amd64.deb
 sudo pacman -U ./pot-f-desktop-0.1.0-1-x86_64.pkg.tar.zst</code></pre>
-        <p>Lub zbuduj z kodu źródłowego (patrz <a href="#budowa">Budowa z kodu</a>).</p>
+        <p>Or build from source (see <a href="#building">Building from source</a>).</p>
 
-        <h3>AppImage (uniwersalna paczka dla Linux)</h3>
-        <p>Pobierz plik <code class="inline-code">Pot-F-0.1.0-x86_64.AppImage</code> ze strony <a href="https://github.com/frs777/pot-f-desktop/releases/latest">GitHub Releases</a></p>
+        <h3>AppImage (universal Linux package)</h3>
+        <p>Download <code class="inline-code">Pot-F-0.1.0-x86_64.AppImage</code> from <a href="https://github.com/frs777/pot-f-desktop/releases/latest">GitHub Releases</a></p>
         <pre><code>chmod +x Pot-F-0.1.0-x86_64.AppImage
 ./Pot-F-0.1.0-x86_64.AppImage</code></pre>
-        <p>Wymaga: <code class="inline-code">libwebkit2gtk-4.1</code>, <code class="inline-code">libgtk-3</code>, <code class="inline-code">tesseract</code></p>
+        <p>Requires: <code class="inline-code">libwebkit2gtk-4.1</code>, <code class="inline-code">libgtk-3</code>, <code class="inline-code">tesseract</code></p>
 
-        <h3>Wymagania systemowe</h3>
+        <h3>System Requirements</h3>
         <table class="plugin-table">
             <thead>
                 <tr>
-                    <th>Dystrybucja</th>
-                    <th>Build (kompilacja)</th>
-                    <th>Runtime (uruchomienie)</th>
+                    <th>Distribution</th>
+                    <th>Build (compilation)</th>
+                    <th>Runtime</th>
                 </tr>
             </thead>
             <tbody>
@@ -319,19 +319,19 @@ sudo pacman -U ./pot-f-desktop-0.1.0-1-x86_64.pkg.tar.zst</code></pre>
             </tbody>
         </table>
 
-        <h4>Fedora - szybka instalacja zależności</h4>
+        <h4>Fedora - quick dependency install</h4>
         <pre><code>sudo dnf install gtk3-devel webkit2gtk4.1-devel \
   libayatana-appindicator-gtk3-devel librsvg2-devel \
   patchelf xdotool-devel libxcb-devel libXrandr-devel \
   dbus-devel tesseract</code></pre>
 
-        <h4>Debian/Ubuntu - szybka instalacja zależności</h4>
+        <h4>Debian/Ubuntu - quick dependency install</h4>
         <pre><code>sudo apt install libgtk-3-dev libwebkit2gtk-4.1-dev \
   libayatana-appindicator3-dev librsvg2-dev patchelf \
   libxdo-dev libxcb1-dev libxrandr-dev libdbus-1-dev \
   tesseract-ocr</code></pre>
 
-        <h4>Arch Linux - szybka instalacja zależności</h4>
+        <h4>Arch Linux - quick dependency install</h4>
         <pre><code>sudo pacman -S gtk3 webkit2gtk-4.1 libayatana-appindicator \
   librsvg patchelf xdotool libxcb libxrandr dbus tesseract</code></pre>
     </div>
@@ -339,22 +339,22 @@ sudo pacman -U ./pot-f-desktop-0.1.0-1-x86_64.pkg.tar.zst</code></pre>
 
 <section id="wayland" style="background: #f8f9fa;">
     <div class="container">
-        <h2>Obsługa Wayland</h2>
+        <h2>Wayland Support</h2>
         <p style="margin: 20px 0;">
-            Wsparcie dla Wayland zależy od dystrybucji i środowiska. Poniżej typowe rozwiązania:
+            Wayland support depends on distribution and desktop environment. Below are typical solutions:
         </p>
         
-        <h3>Skróty klawiszowe nie działają</h3>
-        <p>Tauri nie obsługuje skrótów na Wayland. Skonfiguruj skróty systemowe z wywołaniem przez curl:</p>
+        <h3>Keyboard shortcuts don't work</h3>
+        <p>Tauri doesn't support shortcuts on Wayland. Configure system shortcuts with curl invocation:</p>
         <pre><code>curl "127.0.0.1:60828/selection_translate"</code></pre>
 
-        <h3>Zrzut ekranu nie działa (Hyprland)</h3>
-        <p>Użyj grim + slurp:</p>
+        <h3>Screenshot doesn't work (Hyprland)</h3>
+        <p>Use grim + slurp:</p>
         <pre><code>bind = ALT, X, exec, grim -g "$(slurp)" \
   ~/.cache/com.pot-f-desktop.desktop/pot_screenshot_cut.png \
   && curl "127.0.0.1:60828/ocr_recognize?screenshot=false"</code></pre>
 
-        <h3>Okno pod kursorem (Hyprland windowrulev2)</h3>
+        <h3>Window under cursor (Hyprland windowrulev2)</h3>
         <pre><code>windowrulev2 = float, class:(pot-f-desktop), \
   title:(Translator|OCR|PopClip|Screenshot Translate)
 windowrulev2 = move cursor 0 0, class:(pot-f-desktop), \
@@ -364,68 +364,68 @@ windowrulev2 = move cursor 0 0, class:(pot-f-desktop), \
 
 <section id="api">
     <div class="container">
-        <h2>Wywołanie zewnętrzne (HTTP API)</h2>
+        <h2>External Invocation (HTTP API)</h2>
         <p style="margin: 20px 0;">
-            Pot-F Desktop udostępnia interfejs HTTP na porcie <code class="inline-code">60828</code> (można zmienić w ustawieniach).
+            Pot-F Desktop exposes an HTTP interface on port <code class="inline-code">60828</code> (can be changed in settings).
         </p>
         
         <table class="plugin-table">
             <thead>
                 <tr>
                     <th>Endpoint</th>
-                    <th>Metoda</th>
-                    <th>Opis</th>
+                    <th>Method</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td><code class="inline-code">/</code></td><td>POST</td><td>Tłumacz tekst (body: tekst)</td></tr>
-                <tr><td><code class="inline-code">/config</code></td><td>GET</td><td>Otwórz ustawienia</td></tr>
-                <tr><td><code class="inline-code">/translate</code></td><td>POST</td><td>Tłumacz tekst</td></tr>
-                <tr><td><code class="inline-code">/selection_translate</code></td><td>GET</td><td>Tłumacz zaznaczenie</td></tr>
-                <tr><td><code class="inline-code">/input_translate</code></td><td>GET</td><td>Tłumacz z wprowadzania</td></tr>
-                <tr><td><code class="inline-code">/ocr_recognize</code></td><td>GET</td><td>OCR zrzutu ekranu</td></tr>
-                <tr><td><code class="inline-code">/ocr_translate</code></td><td>GET</td><td>Tłumaczenie zrzutu ekranu</td></tr>
+                <tr><td><code class="inline-code">/</code></td><td>POST</td><td>Translate text (body: text)</td></tr>
+                <tr><td><code class="inline-code">/config</code></td><td>GET</td><td>Open settings</td></tr>
+                <tr><td><code class="inline-code">/translate</code></td><td>POST</td><td>Translate text</td></tr>
+                <tr><td><code class="inline-code">/selection_translate</code></td><td>GET</td><td>Translate selection</td></tr>
+                <tr><td><code class="inline-code">/input_translate</code></td><td>GET</td><td>Input translation</td></tr>
+                <tr><td><code class="inline-code">/ocr_recognize</code></td><td>GET</td><td>Screenshot OCR</td></tr>
+                <tr><td><code class="inline-code">/ocr_translate</code></td><td>GET</td><td>Screenshot translation</td></tr>
             </tbody>
         </table>
 
-        <h3>Przykład</h3>
+        <h3>Example</h3>
         <pre><code>curl "127.0.0.1:60828/selection_translate"</code></pre>
 
-        <h3>Użycie z Flameshot (Linux)</h3>
+        <h3>Usage with Flameshot (Linux)</h3>
         <pre><code>rm ~/.cache/com.pot-f-desktop.desktop/pot_screenshot_cut.png \
   && flameshot gui -s -p ~/.cache/com.pot-f-desktop.desktop/pot_screenshot_cut.png \
   && curl "127.0.0.1:60828/ocr_recognize?screenshot=false"</code></pre>
     </div>
 </section>
 
-<section id="budowa" style="background: #f8f9fa;">
+<section id="building" style="background: #f8f9fa;">
     <div class="container">
-        <h2>Budowa z kodu</h2>
+        <h2>Building from Source</h2>
         
-        <h3>Wymagania</h3>
+        <h3>Requirements</h3>
         <ul style="margin: 20px 0;">
             <li>Node.js >= 18.0.0</li>
             <li>pnpm >= 8.5.0</li>
             <li>Rust >= 1.80.0</li>
         </ul>
 
-        <h3>Kroki</h3>
+        <h3>Steps</h3>
         <ol class="install-steps">
             <li>
-                Sklonuj repozytorium:
+                Clone the repository:
                 <pre><code>git clone https://github.com/frs777/pot-f-desktop.git
 cd pot-f-desktop</code></pre>
             </li>
             <li>
-                Zainstaluj zależności:
+                Install dependencies:
                 <pre><code>pnpm install</code></pre>
             </li>
             <li>
-                Tryb deweloperski:
+                Development mode:
                 <pre><code>pnpm tauri dev</code></pre>
             </li>
             <li>
-                Budowa paczki:
+                Build package:
                 <pre><code>pnpm tauri build --bundles rpm</code></pre>
             </li>
         </ol>
@@ -434,14 +434,11 @@ cd pot-f-desktop</code></pre>
 
 <footer>
     <div class="container">
-        <p><strong>Pot-F Desktop</strong> - Polski fork <a href="https://github.com/pot-app/pot-desktop">pot-app/pot-desktop</a></p>
-        <p style="margin-top: 10px;">Autor oryginału: <a href="https://github.com/Pylogmon">Pylogmon</a> | Fork: <a href="https://github.com/frs777">frs777</a></p>
-        <p style="margin-top: 10px;">Framework: <a href="https://tauri.app/">Tauri</a> | Licencja: GPL-3.0</p>
+        <p><strong>Pot-F Desktop</strong> - A fork of <a href="https://github.com/pot-app/pot-desktop">pot-app/pot-desktop</a></p>
+        <p style="margin-top: 10px;">Original author: <a href="https://github.com/Pylogmon">Pylogmon</a> | Fork: <a href="https://github.com/frs777">frs777</a></p>
+        <p style="margin-top: 10px;">Framework: <a href="https://tauri.app/">Tauri</a> | License: GPL-3.0</p>
         <p style="margin-top: 20px; opacity: 0.7;">
-            Podziękowania: Bob, bob-plugin-openai-translator, uiYzzi, Lichenkass, Pylogmon, Tauri
-        </p>
-        <p style="margin-top: 20px;">
-            📍 Strona www: <a href="https://frs777.github.io/pot-desktop/index.html">https://frs777.github.io/pot-desktop/index.html</a>
+            Acknowledgments: Bob, bob-plugin-openai-translator, uiYzzi, Lichenkass, Pylogmon, Tauri
         </p>
     </div>
 </footer>
