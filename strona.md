@@ -39,3 +39,6 @@
 ## Aktualizacja dokumentacji (2026-08-07 - Release)
 - Utworzono GitHub Release v0.1.0.
 - Naprawiono link pobierania paczki Arch (teraz prowadzi do oficjalnego GitHub Release).
+## Aktualizacja dokumentacji (2026-08-07 - Release 2)
+- Utworzono GitHub Release v0.1.0.
+- Naprawiono linki: pobieranie prowadzi do oficjalnego GitHub Release, link GitHub do głównego repo.
