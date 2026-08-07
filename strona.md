@@ -28,3 +28,7 @@
 - W katalogu głównym znajduje się tylko plik index.html z przekierowaniem do /docs/.
 - Workflow GitHub Actions wdraża teraz katalog docs/.
 - Przycisk pobierania paczki Arch jest naprawiony.
+## Aktualizacja dokumentacji (2026-08-07 - Ostateczna)
+- Przejście na płaską strukturę w root w celu naprawy 404.
+- Usunięto katalog 'docs/'.
+- Pliki stron są teraz bezpośrednio w głównym katalogu.
