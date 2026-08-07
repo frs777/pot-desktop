@@ -28,7 +28,11 @@
 - W katalogu głównym znajduje się tylko plik index.html z przekierowaniem do /docs/.
 - Workflow GitHub Actions wdraża teraz katalog docs/.
 - Przycisk pobierania paczki Arch jest naprawiony.
-## Aktualizacja dokumentacji (2026-08-07 - Ostateczna - Naprawa 404)
+## Aktualizacja dokumentacji (2026-08-07 - Ostateczna - Naprawa 404 i status pobierania)
 - Struktura plików spłaszczona: `index.html` (PL) i `index-en.html` (EN) w głównym katalogu.
-- Usunięto katalogi `docs/` i `www/` oraz błędne przekierowania, które powodowały 404.
-- GitHub Pages wdraża teraz cały katalog główny (`path: '.'`). Strona powinna działać poprawnie pod adresem: https://frs777.github.io/pot-desktop/
+- Usunięto katalogi `docs/` i `www/`.
+- GitHub Pages wdraża teraz cały katalog główny (`path: '.'`).
+- **Status:** Przekierowania działają (404 naprawione). Przycisk pobierania paczki Arch powoduje problemy (link nie działa lub blokuje go przeglądarka mimo formatu raw). Użytkownik planuje przetestować inne podejście.
+- Przyciski pobierania zostały ujednolicone wizualnie.
+- Link do GitHub README naprawiony (wskazuje na właściwy plik).
+- Link do wersji angielskiej w polskiej stronie naprawiony.
