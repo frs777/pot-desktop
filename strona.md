@@ -36,3 +36,6 @@
 - Przyciski pobierania zostały ujednolicone wizualnie.
 - Link do GitHub README naprawiony (wskazuje na właściwy plik).
 - Link do wersji angielskiej w polskiej stronie naprawiony.
+## Aktualizacja dokumentacji (2026-08-07 - Release)
+- Utworzono GitHub Release v0.1.0.
+- Naprawiono link pobierania paczki Arch (teraz prowadzi do oficjalnego GitHub Release).
