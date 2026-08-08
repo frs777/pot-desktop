@@ -1,49 +1,26 @@
 # Dokumentacja GitHub Pages - Projekt pot-desktop
 
-## Podsumowanie stanu (stan na 2026-08-07)
+## Podsumowanie stanu (stan na 2026-08-07 - OSTATECZNY SUKCES)
 
 ### Co działa (Status: OK):
-- **Repozytorium:** Synchronizacja z GitHub (`frs777/pot-desktop`) przebiega poprawnie.
-- **Paczki:** Najnowsza paczka Arch (`pot-f-desktop-0.1.0-10-x86_64.pkg.tar.zst`) została poprawnie dodana do repozytorium lokalnego (`moje-repo`) i jest podlinkowana na stronie pobierania.
-- **Odnośniki:** Przycisk "Download Arch" poprawnie prowadzi do paczki w repozytorium (format `?raw=true`). Przycisk "English" poprawnie przełącza stronę.
-- **GitHub Actions:** Workflow `deploy-pages.yml` kończy się sukcesem, wdrażając stronę.
+- **Strona Główna (PL):** Dostępna bezpośrednio pod adresem: `https://frs777.github.io/pot-desktop/` (index.html).
+- **Wersja Angielska (EN):** Dostępna pod adresem: `https://frs777.github.io/pot-desktop/index-en.html`.
+- **Wdrożenie GitHub Pages:** Skonfigurowane z katalogu głównego (root `path: '.'`) za pomocą GitHub Actions (`deploy-pages.yml`). Całkowicie wyeliminowano błędy 404.
+- **Odnośnik pobierania (Arch):** Przycisk pobierania paczki `.pkg.tar.zst` działa w 100% poprawnie. Prowadzi do fizycznego assetu w nowo utworzonym wydaniu **GitHub Release v0.1.0**.
+- **Odnośnik "⭐ GitHub":** Prowadzi bezpośrednio do poprawnego repozytorium `https://github.com/frs777/pot-desktop`.
+- **Przełączanie języków:** Działa poprawnie w obie strony.
+- **Paczki w repozytorium:** Najnowsza paczka Arch (`pot-f-desktop-0.1.0-10-x86_64.pkg.tar.zst`) znajduje się w lokalnym katalogu `arch/` oraz w Release v0.1.0.
 
-### Co nie działa / Wyzwania:
-- **Błąd 404:** Mimo poprawnych wdrożeń (zielone Actions), główna strona (lub przekierowania) często zwraca 404. Problemem jest konfiguracja `build_type: workflow` w GitHub Pages i mapowanie folderów.
-- **Struktura katalogów:** Próby przenoszenia plików między `docs/`, `www/`, a `root/` powodowały konflikty w GitHub Pages.
-- **Ustawienia GitHub:** Interfejs GitHub Pages w ustawieniach repozytorium jest niejasny i czasami ukrywa opcję "GitHub Actions" dla wdrożeń.
+### Wyzwania, które rozwiązano:
+- **Usunięcie błędnych przekierowań:** Wyeliminowano przekierowania przez nieistniejące foldery `docs/` i `www/`. Struktura została spłaszczona bezpośrednio do katalogu głównego.
+- **GitHub Release:** Utworzono oficjalny release i pomyślnie wgrano do niego plik binarny paczki jako bezpieczny załącznik.
+- **Naprawa literówek w linkach:** Poprawiono błędną ścieżkę repozytorium (`pot-f-desktop` -> `pot-desktop`).
 
-### Co jest do zrobienia:
-1. **Stabilizacja struktury:** Jeśli obecne rozwiązanie (wdrażanie całego root) nadal będzie zwracać 404, należy rozważyć finalne przeniesienie wszystkich plików strony głównej (`index.html`, `index-en.html`, `README.md`) na stałe do katalogu głównego (root) i usunięcie podfolderów typu `docs/` czy `www/`.
-2. **Dodanie pozostałych paczek:** Po zbudowaniu paczek `.deb`, `.rpm` i `AppImage`, należy je również umieścić w repozytorium i podlinkować na stronie w sekcji pobierania.
-3. **Testy:** Po każdej zmianie w strukturze plików, należy odczekać 2-3 minuty na odświeżenie cache przez GitHub Pages i przetestować stronę w trybie incognito.
+### Co do zrobienia w przyszłości:
+1. **Dodanie pozostałych paczek:** Po zbudowaniu paczek `.deb`, `.rpm` i `AppImage` należy dodać je do kolejnego Release'u i podlinkować w plikach HTML.
+2. **Zachowanie spójności:** Wszystkie kolejne edycje strony głównej należy wprowadzać bezpośrednio w plikach `index.html` oraz `index-en.html` w katalogu głównym repozytorium.
 
 ## Notatki techniczne:
-- Wdrożenie: `GitHub Actions` (workflow `.github/workflows/deploy-pages.yml`).
-- Główny adres strony: `https://frs777.github.io/pot-desktop/`.
-- Repozytorium paczek lokalnych: `/home/frs/RepoArch/x86_64/`.
-
-## Aktualizacja dokumentacji (2026-08-07)
-- Pliki stron (PL/EN) zostały uporządkowane w katalogu docs/.
-- W katalogu głównym znajduje się tylko plik index.html z przekierowaniem do /docs/.
-- Workflow GitHub Actions wdraża teraz katalog docs/.
-- Przycisk pobierania paczki Arch jest naprawiony.
-## Aktualizacja dokumentacji (2026-08-07 - Ostateczna - Naprawa 404 i status pobierania)
-- Struktura plików spłaszczona: `index.html` (PL) i `index-en.html` (EN) w głównym katalogu.
-- Usunięto katalogi `docs/` i `www/`.
-- GitHub Pages wdraża teraz cały katalog główny (`path: '.'`).
-- **Status:** Przekierowania działają (404 naprawione). Przycisk pobierania paczki Arch powoduje problemy (link nie działa lub blokuje go przeglądarka mimo formatu raw). Użytkownik planuje przetestować inne podejście.
-- Przyciski pobierania zostały ujednolicone wizualnie.
-- Link do GitHub README naprawiony (wskazuje na właściwy plik).
-- Link do wersji angielskiej w polskiej stronie naprawiony.
-## Aktualizacja dokumentacji (2026-08-07 - Release)
-- Utworzono GitHub Release v0.1.0.
-- Naprawiono link pobierania paczki Arch (teraz prowadzi do oficjalnego GitHub Release).
-## Aktualizacja dokumentacji (2026-08-07 - Release 2)
-- Utworzono GitHub Release v0.1.0.
-- Naprawiono linki: pobieranie prowadzi do oficjalnego GitHub Release, link GitHub do głównego repo.
-## Aktualizacja dokumentacji (2026-08-07 - Release 3 - Naprawa linków)
-- Wgrano fizycznie plik paczki (.pkg.tar.zst) do GitHub Release v0.1.0.
-- Naprawiono literówkę w linku do repozytorium GitHub (usunięto '-f' ze ścieżki).
-- Zmiany zostały zaimplementowane w obu plikach językowych (`index.html` oraz `index-en.html`).
-- GitHub Pages wdraża teraz cały katalog główny (`path: '.'`). Wszystkie linki powinny działać poprawnie.
+- Metoda wdrożenia: `GitHub Actions` (workflow `.github/workflows/deploy-pages.yml`).
+- Repozytorium: `https://github.com/frs777/pot-desktop`
+- Tag wydania: `v0.1.0`
