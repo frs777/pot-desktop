@@ -42,6 +42,8 @@
 ## Aktualizacja dokumentacji (2026-08-07 - Release 2)
 - Utworzono GitHub Release v0.1.0.
 - Naprawiono linki: pobieranie prowadzi do oficjalnego GitHub Release, link GitHub do głównego repo.
-## Aktualizacja dokumentacji (2026-08-07 - Release 3)
+## Aktualizacja dokumentacji (2026-08-07 - Release 3 - Naprawa linków)
 - Wgrano fizycznie plik paczki (.pkg.tar.zst) do GitHub Release v0.1.0.
-- Naprawiono literówkę w linku do repozytorium GitHub (usunięto '-f').
+- Naprawiono literówkę w linku do repozytorium GitHub (usunięto '-f' ze ścieżki).
+- Zmiany zostały zaimplementowane w obu plikach językowych (`index.html` oraz `index-en.html`).
+- GitHub Pages wdraża teraz cały katalog główny (`path: '.'`). Wszystkie linki powinny działać poprawnie.
