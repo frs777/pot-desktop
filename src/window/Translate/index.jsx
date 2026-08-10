@@ -309,7 +309,7 @@ export default function Translate() {
                 <div className={`${osType === 'Linux' ? 'h-[calc(100vh-37px)]' : 'h-[calc(100vh-35px)]'} px-[8px]`}>
                     <div className='h-full overflow-y-auto'>
                         <div>
-                            {serviceInstanceConfigMap !== null && (
+                            {pluginList !== null && serviceInstanceConfigMap !== null && (
                                 <SourceArea
                                     pluginList={pluginList}
                                     serviceInstanceConfigMap={serviceInstanceConfigMap}
@@ -331,6 +331,7 @@ export default function Translate() {
                                         {...provided.droppableProps}
                                     >
                                         {translateServiceInstanceList !== null &&
+                                            pluginList !== null &&
                                             serviceInstanceConfigMap !== null &&
                                             translateServiceInstanceList.map((serviceInstanceKey, index) => {
                                                 const config = serviceInstanceConfigMap[serviceInstanceKey] ?? {};
