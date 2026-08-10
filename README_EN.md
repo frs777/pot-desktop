@@ -49,12 +49,14 @@ Pot-F Desktop is a desktop application for text translation and OCR (optical cha
 
 ## Step-by-step installation
 
+Current builds are available in [GitHub Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.1-0). See the [project website](https://frs777.github.io/pot-desktop/index-en.html) for the full description and links to every package.
+
 ### Fedora 43 (RPM)
 
-1. Go to [Releases](https://github.com/frs777/pot-f-desktop/releases/latest) and download:
+1. Go to [Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.1-0) and download:
 
    ```text
-   pot-f-desktop-0.1.0-1.x86_64.rpm
+   Pot-F-0.1.1-0-1.x86_64.rpm
    ```
 
 2. Install dependencies if they are not resolved automatically:
@@ -66,7 +68,7 @@ Pot-F Desktop is a desktop application for text translation and OCR (optical cha
 3. Install the application:
 
    ```bash
-   sudo dnf install ./pot-f-desktop-0.1.0-1.x86_64.rpm
+   sudo dnf install ./Pot-F-0.1.1-0-1.x86_64.rpm
    ```
 
 4. Launch it from the application menu or terminal:
@@ -77,10 +79,10 @@ Pot-F Desktop is a desktop application for text translation and OCR (optical cha
 
 ### Debian/Ubuntu (DEB)
 
-1. Go to [Releases](https://github.com/frs777/pot-f-desktop/releases/latest) and download:
+1. Go to [Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.1-0) and download:
 
    ```text
-   pot-f-desktop_0.1.0_amd64.deb
+   Pot-F_0.1.1-0_amd64.deb
    ```
 
 2. Install dependencies:
@@ -92,7 +94,7 @@ Pot-F Desktop is a desktop application for text translation and OCR (optical cha
 3. Install and launch Pot-F:
 
    ```bash
-   sudo apt-get install ./pot-f-desktop_0.1.0_amd64.deb
+   sudo apt-get install ./Pot-F_0.1.1-0_amd64.deb
    pot-f
    ```
 
@@ -329,8 +331,8 @@ cargo install tauri-cli --version "^2"
 ### Build
 
 ```bash
-git clone https://github.com/frs777/pot-f-desktop.git
-cd pot-f-desktop
+git clone https://github.com/frs777/pot-desktop.git
+cd pot-desktop
 pnpm install
 pnpm tauri dev
 ```
@@ -347,10 +349,10 @@ Generated bundles are placed under `src-tauri/target/release/bundle/`.
 
 ## Contact
 
-- **GitHub:** https://github.com/frs777/pot-f-desktop
-- **Issues:** https://github.com/frs777/pot-f-desktop/issues
+- **GitHub:** https://github.com/frs777/pot-desktop
+- **Issues:** https://github.com/frs777/pot-desktop/issues
 - **Support email:** frss@protonmail.com
-- **Discussions:** https://github.com/frs777/pot-f-desktop/discussions
+- **Discussions:** https://github.com/frs777/pot-desktop/discussions
 
 ---
 

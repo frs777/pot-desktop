@@ -52,12 +52,14 @@ Pot-F Desktop to aplikacja desktopowa do tłumaczenia tekstu oraz OCR (optyczneg
 
 ## Instalacja krok po kroku
 
+Aktualne wydania znajdziesz w [GitHub Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.1-0), a pełny opis i odnośniki do wszystkich paczek na [stronie projektu](https://frs777.github.io/pot-desktop/index.html).
+
 ### Fedora 43 (RPM)
 
 1. **Pobierz paczkę RPM**
-   Przejdź do strony [Releases](https://github.com/frs777/pot-f-desktop/releases/latest) i pobierz plik:
+   Przejdź do strony [Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.1-0) i pobierz plik:
    ```
-   pot-f-desktop-0.1.0-1.x86_64.rpm
+   Pot-F-0.1.1-0-1.x86_64.rpm
    ```
 
 2. **Zainstaluj zależności** (jeśli nie zostały automatycznie rozwiązane):
@@ -67,7 +69,7 @@ Pot-F Desktop to aplikacja desktopowa do tłumaczenia tekstu oraz OCR (optyczneg
 
 3. **Zainstaluj aplikację**:
    ```bash
-   sudo dnf install ./pot-f-desktop-0.1.0-1.x86_64.rpm
+   sudo dnf install ./Pot-F-0.1.1-0-1.x86_64.rpm
    ```
 
 4. **Uruchom aplikację** z menu aplikacji lub z terminala:
@@ -78,9 +80,9 @@ Pot-F Desktop to aplikacja desktopowa do tłumaczenia tekstu oraz OCR (optyczneg
 ### Debian/Ubuntu (DEB)
 
 1. **Pobierz paczkę DEB**
-   Przejdź do strony [Releases](https://github.com/frs777/pot-f-desktop/releases/latest) i pobierz plik:
+   Przejdź do strony [Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.1-0) i pobierz plik:
    ```
-   pot-f-desktop_0.1.0_amd64.deb
+   Pot-F_0.1.1-0_amd64.deb
    ```
 
 2. **Zainstaluj zależności**:
@@ -90,7 +92,7 @@ Pot-F Desktop to aplikacja desktopowa do tłumaczenia tekstu oraz OCR (optyczneg
 
 3. **Zainstaluj aplikację**:
    ```bash
-   sudo apt-get install ./pot-f-desktop_0.1.0_amd64.deb
+   sudo apt-get install ./Pot-F_0.1.1-0_amd64.deb
    ```
 
 4. **Uruchom aplikację**:
@@ -344,8 +346,8 @@ cargo install tauri-cli --version "^2"
 
 1. **Sklonuj repozytorium**:
    ```bash
-   git clone https://github.com/frs777/pot-f-desktop.git
-   cd pot-f-desktop
+   git clone https://github.com/frs777/pot-desktop.git
+   cd pot-desktop
    ```
 
 2. **Zainstaluj zależności JavaScript**:
@@ -380,10 +382,10 @@ cargo install tauri-cli --version "^2"
 
 ## Kontakt
 
-- **GitHub**: https://github.com/frs777/pot-f-desktop
-- **Issues**: https://github.com/frs777/pot-f-desktop/issues
+- **GitHub**: https://github.com/frs777/pot-desktop
+- **Issues**: https://github.com/frs777/pot-desktop/issues
 - **Email wsparcia**: frss@protonmail.com
-- **Dyskusje**: https://github.com/frs777/pot-f-desktop/discussions
+- **Dyskusje**: https://github.com/frs777/pot-desktop/discussions
 
 ---
 
