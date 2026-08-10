@@ -224,10 +224,16 @@
     <div class="container">
         <h2>System wtyczek</h2>
         <p style="margin: 20px 0;">
-            Aplikacja obsługuje 35 wtyczek w formacie <code class="inline-code">.potext</code> (ZIP archive). 
-            Wtyczki rozszerzają możliwości tłumaczenia, OCR i TTS.
+            Aplikacja obsługuje 35 wtyczek w formacie <code class="inline-code">.potext</code> (archiwum ZIP).
+            Wtyczki rozszerzają możliwości tłumaczenia, OCR, TTS i eksportu fiszek.
         </p>
-        
+        <div style="margin: 20px 0;">
+            <a class="btn" href="https://github.com/frs777/pot-desktop/releases/download/v0.1.1-0/pot-f-desktop-plugins-0.1.1_0-1-any.pkg.tar.zst">Wtyczki Arch</a>
+            <a class="btn" href="https://github.com/frs777/pot-desktop/releases/download/v0.1.1-0/pot-f-desktop-plugins_0.1.1-0_all.deb">Wtyczki DEB</a>
+            <a class="btn" href="https://github.com/frs777/pot-desktop/releases/download/v0.1.1-0/pot-f-desktop-plugins-0.1.1-0.noarch.rpm">Wtyczki RPM</a>
+            <a class="btn" href="https://github.com/frs777/pot-desktop/releases/download/v0.1.1-0/pot-f-desktop-plugins-0.1.1-0.tar.gz">Wtyczki TAR.GZ</a>
+        </div>
+
         <table class="plugin-table">
             <thead>
                 <tr>
@@ -285,7 +291,8 @@
             </li>
             <li>
                 Zainstaluj wtyczki:
-                <pre><code>sudo dnf install ./pot-f-desktop-plugins-0.1.0-1.fc43.noarch.rpm</code></pre>
+                <pre><code>sudo dnf install ./pot-f-desktop-plugins-0.1.1-0.noarch.rpm
+pot-f-install-plugins</code></pre>
             </li>
         </ol>
 
