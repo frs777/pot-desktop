@@ -1,6 +1,6 @@
 [package]
 name = "pot-f"
-version = "0.1.0-10"
+version = "0.1.1-0"
 description = "Pot-F Desktop - Polski fork aplikacji do tłumaczenia tekstu i OCR"
 authors = ["frs777", "pot-app"]
 license = "GPL-3.0-only"
