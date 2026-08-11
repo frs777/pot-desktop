@@ -72,6 +72,56 @@ fn open_app_directory(app: tauri::AppHandle, kind: String) -> Result<(), String>
     Ok(())
 }
 
+#[tauri::command]
+fn get_system_theme() -> String {
+    #[cfg(target_os = "linux")]
+    {
+        if let Ok(output) = std::process::Command::new("gsettings")
+            .args(["get", "org.gnome.desktop.interface", "color-scheme"])
+            .output()
+        {
+            let value = String::from_utf8_lossy(&output.stdout).to_lowercase();
+            if value.contains("prefer-dark") {
+                return "dark".to_string();
+            }
+        }
+
+        let config_dir = std::env::var_os("XDG_CONFIG_HOME")
+            .map(std::path::PathBuf::from)
+            .or_else(|| {
+                std::env::var_os("HOME")
+                    .map(std::path::PathBuf::from)
+                    .map(|home| home.join(".config"))
+            });
+
+        if let Some(config_dir) = config_dir {
+            if let Ok(kde_globals) = std::fs::read_to_string(config_dir.join("kdeglobals")) {
+                let kde_globals = kde_globals.to_lowercase();
+                if kde_globals.lines().any(|line| {
+                    (line.starts_with("colorscheme=") || line.starts_with("lookandfeelpackage="))
+                        && line.contains("dark")
+                }) {
+                    return "dark".to_string();
+                }
+            }
+        }
+
+        if std::env::var("GTK_THEME")
+            .map(|theme| theme.to_lowercase().contains("dark"))
+            .unwrap_or(false)
+        {
+            return "dark".to_string();
+        }
+
+        return "light".to_string();
+    }
+
+    #[cfg(not(target_os = "linux"))]
+    {
+        "system".to_string()
+    }
+}
+
 fn main() {
     // The software-rendering workaround breaks transparent WebViews on Wayland.
     // Keep it for X11 only, where it prevents WebKit2GTK black screens.
@@ -222,7 +272,8 @@ fn main() {
             config_get,
             config_set,
             toggle_clipboard_monitor,
-            open_app_directory
+            open_app_directory,
+            get_system_theme
         ])
         .build(tauri::generate_context!())
         .expect("error while running tauri application")

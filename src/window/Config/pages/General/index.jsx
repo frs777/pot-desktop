@@ -14,7 +14,6 @@ import 'flag-icons/css/flag-icons.min.css';
 import { Input } from '@nextui-org/react';
 import { Card } from '@nextui-org/react';
 import { invoke } from '@tauri-apps/api/core';
-import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useTheme } from 'next-themes';
 
 import { useConfig } from '../../../../hooks/useConfig';
@@ -310,15 +309,9 @@ export default function General() {
                                         if (key !== 'system') {
                                             setTheme(key);
                                         } else {
-                                            const nativeTheme = await getCurrentWindow().theme();
-                                            if (nativeTheme === 'dark' || nativeTheme === 'light') {
-                                                setTheme(nativeTheme);
-                                            } else {
-                                                setTheme(
-                                                    window.matchMedia('(prefers-color-scheme: dark)').matches
-                                                        ? 'dark'
-                                                        : 'light'
-                                                );
+                                            const detectedTheme = await invoke('get_system_theme');
+                                            if (detectedTheme === 'dark' || detectedTheme === 'light') {
+                                                setTheme(detectedTheme);
                                             }
                                         }
                                     }}

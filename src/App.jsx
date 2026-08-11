@@ -88,25 +88,36 @@ export default function App() {
 
     useEffect(() => {
         let unlistenTheme;
+        let themePoll;
 
-        const applySystemTheme = async () => {
+        const detectSystemTheme = async () => {
             try {
+                const detectedTheme = await invoke('get_system_theme');
+                if (detectedTheme === 'dark' || detectedTheme === 'light') {
+                    setTheme(detectedTheme);
+                    return;
+                }
+
                 const nativeTheme = await currentWindow.theme();
                 if (nativeTheme === 'dark' || nativeTheme === 'light') {
                     setTheme(nativeTheme);
-                } else {
-                    setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                    return;
                 }
-
-                unlistenTheme = await currentWindow.onThemeChanged(({ payload }) => {
-                    if (payload === 'dark' || payload === 'light') {
-                        setTheme(payload);
-                    }
-                });
             } catch {
                 warn("Can't detect system theme.");
-                setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             }
+
+            setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        };
+
+        const applySystemTheme = async () => {
+            await detectSystemTheme();
+            unlistenTheme = await currentWindow.onThemeChanged(() => {
+                void detectSystemTheme();
+            });
+            themePoll = window.setInterval(() => {
+                void detectSystemTheme();
+            }, 5000);
         };
 
         if (appTheme !== null) {
@@ -120,6 +131,9 @@ export default function App() {
         return () => {
             if (unlistenTheme) {
                 unlistenTheme();
+            }
+            if (themePoll) {
+                window.clearInterval(themePoll);
             }
         };
     }, [appTheme, setTheme]);
