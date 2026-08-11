@@ -76,7 +76,11 @@
     "app": {
         "withGlobalTauri": false,
         "security": {
-            "csp": "default-src * data: ; img-src * 'self' asset: https: data: ; style-src * 'unsafe-inline'; worker-src 'self' blob: ; script-src * 'unsafe-eval' 'unsafe-inline'; connect-src * 'self' http: https: ws: wss: asset:;"
+            "csp": "default-src * data: ; img-src * 'self' asset: https: data: ; style-src * 'unsafe-inline'; worker-src 'self' blob: ; script-src * 'unsafe-eval' 'unsafe-inline'; connect-src * 'self' http: https: ws: wss: asset:;",
+            "assetProtocol": {
+                "enable": true,
+                "scope": ["$APPCONFIG/**"]
+            }
         },
         "windows": [
             {
