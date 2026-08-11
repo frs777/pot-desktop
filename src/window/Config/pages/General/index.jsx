@@ -14,6 +14,7 @@ import 'flag-icons/css/flag-icons.min.css';
 import { Input } from '@nextui-org/react';
 import { Card } from '@nextui-org/react';
 import { invoke } from '@tauri-apps/api/core';
+import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useTheme } from 'next-themes';
 
 import { useConfig } from '../../../../hooks/useConfig';
@@ -304,25 +305,21 @@ export default function General() {
                                 </DropdownTrigger>
                                 <DropdownMenu
                                     aria-label='app theme'
-                                    onAction={(key) => {
+                                    onAction={async (key) => {
                                         setAppTheme(key);
                                         if (key !== 'system') {
                                             setTheme(key);
                                         } else {
-                                            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                                                setTheme('dark');
+                                            const nativeTheme = await getCurrentWindow().theme();
+                                            if (nativeTheme === 'dark' || nativeTheme === 'light') {
+                                                setTheme(nativeTheme);
                                             } else {
-                                                setTheme('light');
+                                                setTheme(
+                                                    window.matchMedia('(prefers-color-scheme: dark)').matches
+                                                        ? 'dark'
+                                                        : 'light'
+                                                );
                                             }
-                                            window
-                                                .matchMedia('(prefers-color-scheme: dark)')
-                                                .addEventListener('change', (e) => {
-                                                    if (e.matches) {
-                                                        setTheme('dark');
-                                                    } else {
-                                                        setTheme('light');
-                                                    }
-                                                });
                                         }
                                     }}
                                 >

@@ -87,29 +87,42 @@ export default function App() {
     }, [devMode]);
 
     useEffect(() => {
-        if (appTheme !== null) {
-            if (appTheme !== 'system') {
-                setTheme(appTheme);
-            } else {
-                try {
-                    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                        setTheme('dark');
-                    } else {
-                        setTheme('light');
-                    }
-                    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                        if (e.matches) {
-                            setTheme('dark');
-                        } else {
-                            setTheme('light');
-                        }
-                    });
-                } catch {
-                    warn("Can't detect system theme.");
+        let unlistenTheme;
+
+        const applySystemTheme = async () => {
+            try {
+                const nativeTheme = await currentWindow.theme();
+                if (nativeTheme === 'dark' || nativeTheme === 'light') {
+                    setTheme(nativeTheme);
+                } else {
+                    setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
                 }
+
+                unlistenTheme = await currentWindow.onThemeChanged(({ payload }) => {
+                    if (payload === 'dark' || payload === 'light') {
+                        setTheme(payload);
+                    }
+                });
+            } catch {
+                warn("Can't detect system theme.");
+                setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            }
+        };
+
+        if (appTheme !== null) {
+            if (appTheme === 'system') {
+                void applySystemTheme();
+            } else {
+                setTheme(appTheme);
             }
         }
-    }, [appTheme]);
+
+        return () => {
+            if (unlistenTheme) {
+                unlistenTheme();
+            }
+        };
+    }, [appTheme, setTheme]);
 
     useEffect(() => {
         console.log('appLanguage changed:', appLanguage);
