@@ -52,14 +52,14 @@ Pot-F Desktop to aplikacja desktopowa do tłumaczenia tekstu oraz OCR (optyczneg
 
 ## Instalacja krok po kroku
 
-Aktualne wydania znajdziesz w [GitHub Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.1-0), a pełny opis i odnośniki do wszystkich paczek na [stronie projektu](https://frs777.github.io/pot-desktop/index.html).
+Aktualne wydania znajdziesz w [GitHub Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.2-0), a pełny opis i odnośniki do wszystkich paczek na [stronie projektu](https://frs777.github.io/pot-desktop/index.html).
 
 ### Fedora 43 (RPM)
 
 1. **Pobierz paczkę RPM**
-   Przejdź do strony [Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.1-0) i pobierz plik:
+   Przejdź do strony [Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.2-0) i pobierz plik:
    ```
-   Pot-F-0.1.1-0-1.x86_64.rpm
+   Pot-F-0.1.2-0-1.x86_64.rpm
    ```
 
 2. **Zainstaluj zależności** (jeśli nie zostały automatycznie rozwiązane):
@@ -69,7 +69,7 @@ Aktualne wydania znajdziesz w [GitHub Releases](https://github.com/frs777/pot-de
 
 3. **Zainstaluj aplikację**:
    ```bash
-   sudo dnf install ./Pot-F-0.1.1-0-1.x86_64.rpm
+   sudo dnf install ./Pot-F-0.1.2-0-1.x86_64.rpm
    ```
 
 4. **Uruchom aplikację** z menu aplikacji lub z terminala:
@@ -80,9 +80,9 @@ Aktualne wydania znajdziesz w [GitHub Releases](https://github.com/frs777/pot-de
 ### Debian/Ubuntu (DEB)
 
 1. **Pobierz paczkę DEB**
-   Przejdź do strony [Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.1-0) i pobierz plik:
+   Przejdź do strony [Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.2-0) i pobierz plik:
    ```
-   Pot-F_0.1.1-0_amd64.deb
+   Pot-F_0.1.2-0_amd64.deb
    ```
 
 2. **Zainstaluj zależności**:
@@ -92,7 +92,7 @@ Aktualne wydania znajdziesz w [GitHub Releases](https://github.com/frs777/pot-de
 
 3. **Zainstaluj aplikację**:
    ```bash
-   sudo apt-get install ./Pot-F_0.1.1-0_amd64.deb
+   sudo apt-get install ./Pot-F_0.1.2-0_amd64.deb
    ```
 
 4. **Uruchom aplikację**:

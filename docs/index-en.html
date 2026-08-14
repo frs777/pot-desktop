@@ -72,6 +72,14 @@
         .plugin-table { width: 100%; }
         .plugin-table td { padding: 10px 15px; }
         .plugin-type { font-weight: bold; color: #1a73e8; }
+        .plugin-status { font-weight: 600; white-space: nowrap; }
+        .plugin-status.active { color: #137333; }
+        .plugin-status.new { color: #7b1fa2; }
+        .plugin-status.limited { color: #9a6700; }
+        .plugin-status.removed { color: #b3261e; }
+        .plugin-removed { color: #777; background: #f1f3f4; }
+        .plugin-removed td:first-child,
+        .plugin-removed td:nth-child(2) { text-decoration: line-through; }
         
         @media (max-width: 768px) {
             header h1 { font-size: 2em; }
@@ -98,10 +106,10 @@
         </div>
         <div style="margin-top: 30px;">
             <div class="badge-row">
-                <a href="https://github.com/frs777/pot-desktop/releases/download/v0.1.1-0/pot-f-desktop-0.1.1_0-1-x86_64.pkg.tar.zst" class="btn btn-outline">⬇ Arch (.pkg.tar.zst)</a>
-                <a href="https://github.com/frs777/pot-desktop/releases/download/v0.1.1-0/Pot-F_0.1.1-0_amd64.deb" class="btn btn-outline">⬇ Debian (.deb)</a>
-                <a href="https://github.com/frs777/pot-desktop/releases/download/v0.1.1-0/Pot-F-0.1.1-0-1.x86_64.rpm" class="btn btn-outline">⬇ Fedora (.rpm)</a>
-                <a href="https://github.com/frs777/pot-desktop/releases/download/v0.1.1-0/Pot-F_0.1.1-0_amd64.AppImage" class="btn btn-outline">⬇ AppImage</a>
+                <a href="https://github.com/frs777/pot-desktop/releases/download/v0.1.2-0/pot-f-desktop-0.1.2_0-1-x86_64.pkg.tar.zst" class="btn btn-outline">⬇ Arch (.pkg.tar.zst)</a>
+                <a href="https://github.com/frs777/pot-desktop/releases/download/v0.1.2-0/Pot-F_0.1.2-0_amd64.deb" class="btn btn-outline">⬇ Debian (.deb)</a>
+                <a href="https://github.com/frs777/pot-desktop/releases/download/v0.1.2-0/Pot-F-0.1.2-0-1.x86_64.rpm" class="btn btn-outline">⬇ Fedora (.rpm)</a>
+                <a href="https://github.com/frs777/pot-desktop/releases/download/v0.1.2-0/Pot-F_0.1.2-0_amd64.AppImage" class="btn btn-outline">⬇ AppImage</a>
             </div>
             <div style="margin-top: 10px;">
                 <a href="https://github.com/frs777/pot-desktop" class="btn btn-outline">⭐ GitHub</a>
@@ -224,8 +232,9 @@
     <div class="container">
         <h2>Plugin System</h2>
         <p style="margin: 20px 0;">
-            The application supports 35 plugins in <code class="inline-code">.potext</code> format (ZIP archive). 
-            Plugins extend translation, OCR and TTS capabilities.
+            The current collection contains 31 active plugins in <code class="inline-code">.potext</code> format (ZIP archive).
+            Plugins extend translation, OCR, TTS and flashcard export capabilities.
+            Five retired entries remain struck through with an explanation.
         </p>
         
         <table class="plugin-table">
@@ -233,38 +242,47 @@
                 <tr>
                     <th>Plugin</th>
                     <th>Type</th>
+                    <th>Status</th>
                     <th>Description</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td>Baidu</td><td class="plugin-type">Translate</td><td>Translation via Baidu Fanyi</td></tr>
-                <tr><td>CaiYun</td><td class="plugin-type">Translate</td><td>Translation via CaiYun</td></tr>
-                <tr><td>Papago</td><td class="plugin-type">Translate</td><td>Translation via Naver Papago</td></tr>
-                <tr><td>Tencent</td><td class="plugin-type">Translate</td><td>Translation via Tencent Fanyi</td></tr>
-                <tr><td>Transmart</td><td class="plugin-type">Translate</td><td>Translation via Transmart</td></tr>
-                <tr><td>Volcengine</td><td class="plugin-type">Translate</td><td>Translation via Volcengine</td></tr>
-                <tr><td>Youdao</td><td class="plugin-type">Translate</td><td>Translation via Youdao</td></tr>
-                <tr><td>DeepSeek</td><td class="plugin-type">Translate</td><td>Translation via DeepSeek AI</td></tr>
-                <tr><td>Local DeepSeek-R1</td><td class="plugin-type">Translate</td><td>Local DeepSeek-R1 model</td></tr>
-                <tr><td>Microsoft</td><td class="plugin-type">Translate</td><td>Azure Translator</td></tr>
-                <tr><td>Azure</td><td class="plugin-type">Translate</td><td>Azure Translator API</td></tr>
-                <tr><td>Doc2X</td><td class="plugin-type">Translate/OCR</td><td>Document translation and recognition</td></tr>
-                <tr><td>Libre</td><td class="plugin-type">Translate</td><td>Free LibreTranslate service</td></tr>
-                <tr><td>FreeDict</td><td class="plugin-type">Translate</td><td>Free online dictionary</td></tr>
-                <tr><td>Baimiao OCR</td><td class="plugin-type">Recognize</td><td>OCR via Baimiao</td></tr>
-                <tr><td>OCR Space</td><td class="plugin-type">Recognize</td><td>OCR via OCR.space</td></tr>
-                <tr><td>OpenAI Recognize</td><td class="plugin-type">Recognize</td><td>OCR via OpenAI Vision</td></tr>
-                <tr><td>PaddleOCR</td><td class="plugin-type">Recognize</td><td>OCR via PaddlePaddle</td></tr>
-                <tr><td>Qwen OCR</td><td class="plugin-type">Recognize</td><td>OCR via Qwen AI</td></tr>
-                <tr><td>RapidOCR</td><td class="plugin-type">Recognize</td><td>Fast OCR RapidOCR</td></tr>
-                <tr><td>Ollama Recognize</td><td class="plugin-type">Recognize</td><td>OCR via local Ollama model</td></tr>
-                <tr><td>Google Recognize</td><td class="plugin-type">Recognize</td><td>Google Cloud Vision OCR</td></tr>
-                <tr><td>OpenAI TTS</td><td class="plugin-type">TTS</td><td>OpenAI text-to-speech</td></tr>
-                <tr><td>Lingva TTS</td><td class="plugin-type">TTS</td><td>Lingva text-to-speech</td></tr>
-                <tr><td>Youdao TTS</td><td class="plugin-type">TTS</td><td>Youdao text-to-speech</td></tr>
-                <tr><td>Volcengine TTS</td><td class="plugin-type">TTS</td><td>Volcengine text-to-speech</td></tr>
-                <tr><td>Anki</td><td class="plugin-type">Collection</td><td>Export to Anki</td></tr>
-                <tr><td>Shanbay</td><td class="plugin-type">Collection</td><td>Export to Shanbay</td></tr>
+                <tr><td>Baidu</td><td class="plugin-type">Translate</td><td class="plugin-status active">Available</td><td>Translation via Baidu Fanyi</td></tr>
+                <tr><td>CaiYun</td><td class="plugin-type">Translate</td><td class="plugin-status active">Available</td><td>Translation via CaiYun</td></tr>
+                <tr><td>Cohere</td><td class="plugin-type">Translate</td><td class="plugin-status active">Available</td><td>Translation via Cohere models</td></tr>
+                <tr><td>Volcengine</td><td class="plugin-type">Translate</td><td class="plugin-status active">Available</td><td>Translation via Volcengine</td></tr>
+                <tr><td>Youdao</td><td class="plugin-type">Translate</td><td class="plugin-status active">Available</td><td>Translation via Youdao</td></tr>
+                <tr><td>DeepSeek</td><td class="plugin-type">Translate</td><td class="plugin-status active">Available</td><td>Translation via DeepSeek AI</td></tr>
+                <tr><td>Azure</td><td class="plugin-type">Translate</td><td class="plugin-status active">Available</td><td>Microsoft Azure Translator API</td></tr>
+                <tr><td>GCIDE</td><td class="plugin-type">Translate</td><td class="plugin-status active">Available</td><td>GNU English dictionary</td></tr>
+                <tr><td>Lingva</td><td class="plugin-type">Translate</td><td class="plugin-status limited">Own instance</td><td>Translation frontend; the default public instance is unavailable</td></tr>
+                <tr><td>MOJi Dictionary</td><td class="plugin-type">Translate</td><td class="plugin-status active">Available</td><td>MOJi Japanese dictionary</td></tr>
+                <tr><td>Tatoeba</td><td class="plugin-type">Translate</td><td class="plugin-status active">Available</td><td>Example sentences from the Tatoeba project</td></tr>
+                <tr><td>LibreTranslate</td><td class="plugin-type">Translate</td><td class="plugin-status active">Available</td><td>Translation through a selected LibreTranslate instance</td></tr>
+                <tr><td>Free Dictionary API</td><td class="plugin-type">Translate</td><td class="plugin-status active">Available</td><td>Free online dictionary</td></tr>
+                <tr><td>Mozhi</td><td class="plugin-type">Translate</td><td class="plugin-status new">New</td><td>Google, DeepL, DuckDuckGo, LibreTranslate, MyMemory, Reverso and Yandex through a selectable instance</td></tr>
+                <tr><td>Baimiao OCR</td><td class="plugin-type">Recognize</td><td class="plugin-status active">Available</td><td>OCR via Baimiao</td></tr>
+                <tr><td>Microsoft OCR</td><td class="plugin-type">Recognize</td><td class="plugin-status active">Available</td><td>Text recognition via Microsoft</td></tr>
+                <tr><td>Doc2X OCR</td><td class="plugin-type">Recognize</td><td class="plugin-status active">Available</td><td>Document recognition via Doc2X</td></tr>
+                <tr><td>OCR Space</td><td class="plugin-type">Recognize</td><td class="plugin-status active">Available</td><td>OCR via OCR.space</td></tr>
+                <tr><td>OpenAI Recognize</td><td class="plugin-type">Recognize</td><td class="plugin-status active">Available</td><td>OCR via OpenAI Vision</td></tr>
+                <tr><td>PaddleOCR</td><td class="plugin-type">Recognize</td><td class="plugin-status active">Available</td><td>OCR via PaddlePaddle</td></tr>
+                <tr><td>Qwen OCR</td><td class="plugin-type">Recognize</td><td class="plugin-status active">Available</td><td>OCR via Qwen AI</td></tr>
+                <tr><td>RapidOCR</td><td class="plugin-type">Recognize</td><td class="plugin-status active">Available</td><td>Fast local OCR</td></tr>
+                <tr><td>Ollama Recognize</td><td class="plugin-type">Recognize</td><td class="plugin-status active">Available</td><td>OCR via a local Ollama model</td></tr>
+                <tr><td>Google OCR</td><td class="plugin-type">Recognize</td><td class="plugin-status active">Available</td><td>Text recognition via Google Cloud Vision</td></tr>
+                <tr><td>OpenAI TTS</td><td class="plugin-type">TTS</td><td class="plugin-status active">Available</td><td>OpenAI text-to-speech</td></tr>
+                <tr><td>Lingva TTS</td><td class="plugin-type">TTS</td><td class="plugin-status limited">Own instance</td><td>Lingva text-to-speech; the default public instance is unavailable</td></tr>
+                <tr><td>Youdao TTS</td><td class="plugin-type">TTS</td><td class="plugin-status active">Available</td><td>Youdao text-to-speech</td></tr>
+                <tr><td>Volcengine TTS</td><td class="plugin-type">TTS</td><td class="plugin-status active">Available</td><td>Volcengine text-to-speech</td></tr>
+                <tr><td>Anki</td><td class="plugin-type">Collection</td><td class="plugin-status active">Available</td><td>Export flashcards to Anki</td></tr>
+                <tr><td>Shanbay</td><td class="plugin-type">Collection</td><td class="plugin-status active">Available</td><td>Export flashcards to Shanbay</td></tr>
+                <tr><td>Youdao</td><td class="plugin-type">Collection</td><td class="plugin-status active">Available</td><td>Export flashcards to Youdao</td></tr>
+                <tr class="plugin-removed"><td>ECDICT Dictionary</td><td class="plugin-type">Translate</td><td class="plugin-status removed">Retired</td><td>No Polish language support — unavailable for the language directions used by Pot-F</td></tr>
+                <tr class="plugin-removed"><td>Papago</td><td class="plugin-type">Translate</td><td class="plugin-status removed">Retired</td><td>No Polish language support — removed from the package</td></tr>
+                <tr class="plugin-removed"><td>Tencent</td><td class="plugin-type">Translate</td><td class="plugin-status removed">Retired</td><td>No Polish language support — removed from the package</td></tr>
+                <tr class="plugin-removed"><td>Tencent Transmart</td><td class="plugin-type">Translate</td><td class="plugin-status removed">Retired</td><td>No Polish language support — removed from the package</td></tr>
+                <tr class="plugin-removed"><td>Local DeepSeek-R1</td><td class="plugin-type">Translate</td><td class="plugin-status removed">Retired</td><td>Redundant and dependent on Ollama — removed from the current collection</td></tr>
             </tbody>
         </table>
     </div>
@@ -277,28 +295,28 @@
         <h3>Fedora 43 (RPM)</h3>
         <ol class="install-steps">
             <li>
-                Download the package from <a href="https://github.com/frs777/pot-desktop/releases/tag/v0.1.1-0">GitHub Releases</a>
+                Download the package from <a href="https://github.com/frs777/pot-desktop/releases/tag/v0.1.2-0">GitHub Releases</a>
             </li>
             <li>
                 Install:
-                <pre><code>sudo dnf install ./Pot-F-0.1.1-0-1.x86_64.rpm</code></pre>
+                <pre><code>sudo dnf install ./Pot-F-0.1.2-0-1.x86_64.rpm</code></pre>
             </li>
             <li>
                 Install plugins:
-                <pre><code>sudo dnf install ./pot-f-desktop-plugins-0.1.1-0.noarch.rpm
+                <pre><code>sudo dnf install ./pot-f-desktop-plugins-0.1.2-0.noarch.rpm
 pot-f-install-plugins</code></pre>
             </li>
         </ol>
 
         <h3>Arch Linux / Manjaro</h3>
         <p>Download the native Arch package from GitHub Releases and install it:</p>
-        <pre><code>sudo pacman -U ./pot-f-desktop-0.1.1_0-1-x86_64.pkg.tar.zst</code></pre>
+        <pre><code>sudo pacman -U ./pot-f-desktop-0.1.2_0-1-x86_64.pkg.tar.zst</code></pre>
         <p>Or build from source (see <a href="#building">Building from source</a>).</p>
 
         <h3>AppImage (universal Linux package)</h3>
-        <p>Download <code class="inline-code">Pot-F_0.1.1-0_amd64.AppImage</code> from <a href="https://github.com/frs777/pot-desktop/releases/tag/v0.1.1-0">GitHub Releases</a></p>
-        <pre><code>chmod +x Pot-F_0.1.1-0_amd64.AppImage
-./Pot-F_0.1.1-0_amd64.AppImage</code></pre>
+        <p>Download <code class="inline-code">Pot-F_0.1.2-0_amd64.AppImage</code> from <a href="https://github.com/frs777/pot-desktop/releases/tag/v0.1.2-0">GitHub Releases</a></p>
+        <pre><code>chmod +x Pot-F_0.1.2-0_amd64.AppImage
+./Pot-F_0.1.2-0_amd64.AppImage</code></pre>
         <p>Requires: <code class="inline-code">libwebkit2gtk-4.1</code>, <code class="inline-code">libgtk-3</code>, <code class="inline-code">tesseract</code></p>
 
         <h3>System Requirements</h3>

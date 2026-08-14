@@ -6,7 +6,7 @@
         "devUrl": "http://127.0.0.1:1420"
     },
     "productName": "Pot-F",
-    "version": "0.1.1-0",
+    "version": "0.1.2-0",
     "identifier": "com.pot-f-desktop.desktop",
     "plugins": {
         "updater": {

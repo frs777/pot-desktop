@@ -4938,7 +4938,7 @@ dependencies = [
 
 [[package]]
 name = "pot-f"
-version = "0.1.1-0"
+version = "0.1.2-0"
 dependencies = [
  "arboard",
  "base64 0.22.1",

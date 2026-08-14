@@ -49,14 +49,14 @@ Pot-F Desktop is a desktop application for text translation and OCR (optical cha
 
 ## Step-by-step installation
 
-Current builds are available in [GitHub Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.1-0). See the [project website](https://frs777.github.io/pot-desktop/index-en.html) for the full description and links to every package.
+Current builds are available in [GitHub Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.2-0). See the [project website](https://frs777.github.io/pot-desktop/index-en.html) for the full description and links to every package.
 
 ### Fedora 43 (RPM)
 
-1. Go to [Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.1-0) and download:
+1. Go to [Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.2-0) and download:
 
    ```text
-   Pot-F-0.1.1-0-1.x86_64.rpm
+   Pot-F-0.1.2-0-1.x86_64.rpm
    ```
 
 2. Install dependencies if they are not resolved automatically:
@@ -68,7 +68,7 @@ Current builds are available in [GitHub Releases](https://github.com/frs777/pot-
 3. Install the application:
 
    ```bash
-   sudo dnf install ./Pot-F-0.1.1-0-1.x86_64.rpm
+   sudo dnf install ./Pot-F-0.1.2-0-1.x86_64.rpm
    ```
 
 4. Launch it from the application menu or terminal:
@@ -79,10 +79,10 @@ Current builds are available in [GitHub Releases](https://github.com/frs777/pot-
 
 ### Debian/Ubuntu (DEB)
 
-1. Go to [Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.1-0) and download:
+1. Go to [Releases](https://github.com/frs777/pot-desktop/releases/tag/v0.1.2-0) and download:
 
    ```text
-   Pot-F_0.1.1-0_amd64.deb
+   Pot-F_0.1.2-0_amd64.deb
    ```
 
 2. Install dependencies:
@@ -94,7 +94,7 @@ Current builds are available in [GitHub Releases](https://github.com/frs777/pot-
 3. Install and launch Pot-F:
 
    ```bash
-   sudo apt-get install ./Pot-F_0.1.1-0_amd64.deb
+   sudo apt-get install ./Pot-F_0.1.2-0_amd64.deb
    pot-f
    ```
 
