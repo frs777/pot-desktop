@@ -327,7 +327,7 @@ export default async function detect(text) {
         case 'yandex':
             return await yandex_detect(text);
         case 'bing':
-            return await bing_detect(text);
+            return await local_detect(text);
         default:
             return await local_detect(text);
     }

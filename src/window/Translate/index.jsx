@@ -71,7 +71,6 @@ export default function Translate() {
     const [rememberWindowSize] = useConfig('translate_remember_window_size', false);
     const [translateServiceInstanceList, setTranslateServiceInstanceList] = useConfig('translate_service_list', [
         'deepl',
-        'bing',
         'lingva',
         'yandex',
         'google',

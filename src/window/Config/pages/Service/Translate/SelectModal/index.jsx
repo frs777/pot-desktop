@@ -20,7 +20,9 @@ export default function SelectModal(props) {
                     <>
                         <ModalHeader>{t('config.service.add_service')}</ModalHeader>
                         <ModalBody>
-                            {Object.keys(builtinServices).map((x) => {
+                            {Object.keys(builtinServices)
+                                .filter((x) => !['bing', 'bing_dict'].includes(x))
+                                .map((x) => {
                                 return (
                                     <div key={x}>
                                         <Button
